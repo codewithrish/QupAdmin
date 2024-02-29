@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">authentication</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="image">Image</string>
+    <string name="painless_opd_experience">Painless OPD Experience</string>
+    <string name="enter_your_mobile_number">Enter 10 digit Mobile Number</string>
+    <string name="terms_conditions"><![CDATA[I agree to the Terms & Conditions]]></string>
+    <string name="terms_conditions_url">https://www.qupapp.com/terms-conditions.html</string>
+    <string name="privacy_policy_url">https://qupapp.com/QupPrivacy_Policy.html</string>
+    <string name="login">Login</string>
+    <string name="enter_otp">Enter OTP</string>
+    <string name="submit">Submit</string>
+    <string name="resend_otp">Resend OTP</string>
+    <string name="welcome">Welcome</string>
+    <string name="otp_sent_again">Otp Sent Again</string>
+    <string name="user_name">%1$s %2$s</string>
+</resources>

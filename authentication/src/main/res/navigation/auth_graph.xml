@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/auth_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="app.qup.authentication.presentation.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_otpFragment"
+            app:destination="@id/otpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/otpFragment"
+        android:name="app.qup.authentication.presentation.otp.OtpFragment"
+        android:label="fragment_otp"
+        tools:layout="@layout/fragment_otp" >
+        <argument
+            android:name="mobileNumber"
+            app:argType="string" />
+        <argument
+            android:name="signInInfo"
+            app:argType="app.qup.authentication.domain.model.SignInInfo" />
+        <action
+            android:id="@+id/action_otpFragment_to_home_graph"
+            app:destination="@id/home_graph"
+            app:popUpTo="@id/auth_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <include app:graph="@navigation/home_graph" />
+</navigation>
