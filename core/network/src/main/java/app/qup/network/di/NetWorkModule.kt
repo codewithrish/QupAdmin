@@ -4,9 +4,9 @@ import app.qup.network.BuildConfig
 import app.qup.network.common.AuthAuthenticator
 import app.qup.network.common.AuthInterceptor
 import app.qup.network.common.QupInterceptorOkHttpClient
-import app.qup.network.common.TokenManager
 import app.qup.network.common.UnAuthorisedInterceptorOkHttpClient
 import app.qup.util.common.BASE_URL
+import app.qup.util.common.QupSharedPrefManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -66,10 +66,10 @@ object NetWorkModule {
     }
     @Singleton
     @Provides
-    fun provideAuthInterceptor(tokenManager: TokenManager): AuthInterceptor = AuthInterceptor(tokenManager)
+    fun provideAuthInterceptor(qupSharedPrefManager: QupSharedPrefManager): AuthInterceptor = AuthInterceptor(qupSharedPrefManager)
     @Singleton
     @Provides
-    fun provideAuthAuthenticator(tokenManager: TokenManager): AuthAuthenticator = AuthAuthenticator(tokenManager)
+    fun provideAuthAuthenticator(qupSharedPrefManager: QupSharedPrefManager): AuthAuthenticator = AuthAuthenticator(qupSharedPrefManager)
     // Retrofit Builder
     @Singleton
     @Provides

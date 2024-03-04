@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/reception_graph"
+    app:startDestination="@id/searchReceptionFragment">
+
+    <fragment
+        android:id="@+id/searchReceptionFragment"
+        android:name="app.qup.reception_management.presentation.search_reception.SearchReceptionFragment"
+        android:label="Search Reception"
+        tools:layout="@layout/fragment_search_reception" />
+</navigation>

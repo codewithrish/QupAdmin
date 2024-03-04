@@ -8,6 +8,23 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="app.qup.home.presentation.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        android:label="Home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_doctor_graph"
+            app:destination="@id/doctor_graph" />
+        <action
+            android:id="@+id/action_homeFragment_to_reception_graph"
+            app:destination="@id/reception_graph" />
+        <action
+            android:id="@+id/action_homeFragment_to_srk_graph"
+            app:destination="@id/srk_graph" />
+        <action
+            android:id="@+id/action_homeFragment_to_entity_graph"
+            app:destination="@id/entity_graph" />
+    </fragment>
+    <include app:graph="@navigation/doctor_graph" />
+    <include app:graph="@navigation/reception_graph" />
+    <include app:graph="@navigation/srk_graph" />
+    <include app:graph="@navigation/entity_graph" />
 </navigation>

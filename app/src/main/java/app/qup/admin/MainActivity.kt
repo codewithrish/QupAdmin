@@ -1,10 +1,10 @@
 package app.qup.admin
 
-import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -20,17 +20,23 @@ class MainActivity : AppCompatActivity() {
 
     private val mainViewModel by viewModels<MainViewModel>()
 
-    // private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-//        appBarConfiguration = AppBarConfiguration(
-//            setOf()
-//        )
+        setSupportActionBar(binding.toolbar)
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                app.qup.home.R.id.homeFragment,
+                app.qup.doctor_management.R.id.searchDoctorFragment,
+                app.qup.reception_management.R.id.searchReceptionFragment,
+                app.qup.srk_management.R.id.searchSrkFragment,
+                com.codewithrish.entity_management.R.id.searchEntityFragment
+            )
+        )
         val navHostFragment = supportFragmentManager.findFragmentById(
             binding.navHostFragmentContainer.id
         ) as NavHostFragment
@@ -42,8 +48,12 @@ class MainActivity : AppCompatActivity() {
         } else {
             inflater.inflate(app.qup.home.R.navigation.home_graph)
         }
-        // setupActionBarWithNavController(navController, appBarConfiguration)
+        setupActionBarWithNavController(navController, appBarConfiguration)
         navController.setGraph(graph, intent.extras)
 
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            binding.toolbar.isVisible = !(destination.id == app.qup.authentication.R.id.loginFragment
+                    || destination.id == app.qup.authentication.R.id.otpFragment)
+        }
     }
 }

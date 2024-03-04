@@ -15,23 +15,25 @@ import java.util.HashMap
 import javax.inject.Inject
 import app.qup.util.common.CLIENT_USERNAME
 import app.qup.util.common.CLIENT_PASSWORD
+import app.qup.util.common.JWT_ACCESS_TOKEN_PREF
+import app.qup.util.common.JWT_REFRESH_TOKEN_PREF
+import app.qup.util.common.QupSharedPrefManager
 
 class AuthAuthenticator @Inject constructor(
-    private val tokenManager: TokenManager,
+    private val qupSharedPrefManager: QupSharedPrefManager
 ): Authenticator {
     override fun authenticate(route: Route?, response: Response): Request? {
-        val token = runBlocking {
-            tokenManager.getRefreshToken().first()
-        }
+        val refreshToken = qupSharedPrefManager.getStringValue(JWT_REFRESH_TOKEN_PREF)
+
         return runBlocking {
-            val newToken = getNewToken(token?:"")
+            val newToken = getNewToken(refreshToken = refreshToken?:"")
             if (!newToken.isSuccessful || newToken.body() == null) {
-                tokenManager.deleteAccessToken()
-                tokenManager.deleteRefreshToken()
+                qupSharedPrefManager.deleteKey(JWT_ACCESS_TOKEN_PREF)
+                qupSharedPrefManager.deleteKey(JWT_REFRESH_TOKEN_PREF)
             }
             newToken.body()?.toToken()?.let {
-                tokenManager.saveAccessToken(it.accessToken)
-                tokenManager.saveRefreshToken(it.refreshToken)
+                qupSharedPrefManager.save(JWT_ACCESS_TOKEN_PREF, it.accessToken)
+                qupSharedPrefManager.save(JWT_REFRESH_TOKEN_PREF, it.refreshToken)
                 response.request.newBuilder()
                     .header("Authorization", "Bearer ${it.accessToken}")
                     .build()

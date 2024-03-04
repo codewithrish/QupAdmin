@@ -5,12 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import app.qup.home.databinding.FragmentHomeBinding
+import app.qup.ui.common.safeNavigate
 
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+
+    private val navController: NavController? by lazy { view?.findNavController() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,6 +32,25 @@ class HomeFragment : Fragment() {
     }
 
     private fun callFunctions() {
+        navigate()
+    }
 
+    private fun navigate() {
+        binding.btnDoctor.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToDoctorGraph()
+            navController?.safeNavigate(action)
+        }
+        binding.btnReception.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToReceptionGraph()
+            navController?.safeNavigate(action)
+        }
+        binding.btnSrkManager.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToSrkGraph()
+            navController?.safeNavigate(action)
+        }
+        binding.btnEntityManager.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToEntityGraph()
+            navController?.safeNavigate(action)
+        }
     }
 }

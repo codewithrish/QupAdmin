@@ -21,4 +21,6 @@ dependencies {
     // Navigation
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
+    // Paging
+    implementation(libs.androidx.paging)
 }

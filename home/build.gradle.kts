@@ -2,6 +2,8 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
+    // Sage Args
+    alias(libs.plugins.safe.args)
 }
 
 android {
@@ -9,6 +11,12 @@ android {
 }
 
 dependencies {
+
+    implementation(project(":core:ui"))
+    implementation(project(":feature:doctor_management"))
+    implementation(project(":feature:reception_management"))
+    implementation(project(":feature:srk_management"))
+    implementation(project(":feature:entity_management"))
 
     implementation(libs.core.ktx)
     implementation(libs.appcompat)

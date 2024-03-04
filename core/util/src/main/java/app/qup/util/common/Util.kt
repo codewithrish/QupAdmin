@@ -1,10 +1,14 @@
 package app.qup.util.common
 
-import android.content.Context
-import android.view.Gravity
-import android.view.View
-import android.view.inputmethod.InputMethodManager
-import android.widget.FrameLayout
-import android.widget.TextView
-import com.google.android.material.snackbar.Snackbar
+import java.text.SimpleDateFormat
+import java.util.Locale
 
+fun millisToDateString(date: Long?, format: String = LOCAL_DATE_FORMAT): String {
+    if (date == null || date == 0L) {
+        return ""
+    }
+    val formatter = SimpleDateFormat(format, Locale.getDefault())
+    return formatter.format(date)
+}
+
+fun String.onlyDigits(): Boolean = (firstOrNull { !it.isDigit() } == null)
