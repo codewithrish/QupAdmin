@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import app.qup.doctor_management.domain.model.Doctor
+import app.qup.doctor_management.domain.model.DoctorR
 import app.qup.doctor_management.domain.use_case.GetAllDoctorsUseCase
 import app.qup.doctor_management.domain.use_case.SearchDoctorByNumberState
 import app.qup.doctor_management.domain.use_case.SearchDoctorByNumberUseCase
@@ -14,7 +14,6 @@ import app.qup.doctor_management.domain.use_case.SearchDoctorsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -26,16 +25,16 @@ class SearchDoctorViewModel @Inject constructor(
     private val searchDoctorsUseCase: SearchDoctorsUseCase,
     private val searchDoctorByNumberUseCase: SearchDoctorByNumberUseCase
 ) : ViewModel() {
-    private lateinit var _doctors: Flow<PagingData<Doctor>>
-    val doctors: Flow<PagingData<Doctor>>
+    private lateinit var _doctors: Flow<PagingData<DoctorR>>
+    val doctors: Flow<PagingData<DoctorR>>
         get() = _doctors
 
-    private lateinit var _searchDoctors: Flow<PagingData<Doctor>>
-    val searchDoctors: Flow<PagingData<Doctor>>
+    private lateinit var _searchDoctors: Flow<PagingData<DoctorR>>
+    val searchDoctors: Flow<PagingData<DoctorR>>
         get() = _searchDoctors
 
-//    private lateinit var _searchDoctorByNumber: Flow<PagingData<Doctor>>
-//    val searchDoctorByNumber: Flow<PagingData<Doctor>>
+//    private lateinit var _searchDoctorByNumber: Flow<PagingData<DoctorR>>
+//    val searchDoctorByNumber: Flow<PagingData<DoctorR>>
 //        get() = _searchDoctorByNumber
 
     private val _searchDoctorByNumber: MutableLiveData<SearchDoctorByNumberState> = MutableLiveData()
@@ -67,8 +66,8 @@ class SearchDoctorViewModel @Inject constructor(
         }.launchIn(viewModelScope)
 //        viewModelScope.launch {
 //            searchDoctorByNumberUseCase(mobileNumber).onEach {
-//                it.doctor?.let { doctor ->
-//                    _searchDoctorByNumber = flow<PagingData<Doctor>> { PagingData.from(listOf(doctor)) }.cachedIn(this)
+//                it.doctorR?.let { doctorR ->
+//                    _searchDoctorByNumber = flow<PagingData<DoctorR>> { PagingData.from(listOf(doctorR)) }.cachedIn(this)
 //                }
 //            }
 //        }

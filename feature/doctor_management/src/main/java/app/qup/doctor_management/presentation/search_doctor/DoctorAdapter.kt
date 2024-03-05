@@ -7,10 +7,10 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import app.qup.doctor_management.databinding.ListItemDoctorBinding
-import app.qup.doctor_management.domain.model.Doctor
+import app.qup.doctor_management.domain.model.DoctorR
 import app.qup.util.common.millisToDateString
 
-class DoctorAdapter : PagingDataAdapter<Doctor, DoctorAdapter.DoctorViewHolder>(DoctorDiffUtil()) {
+class DoctorAdapter : PagingDataAdapter<DoctorR, DoctorAdapter.DoctorViewHolder>(DoctorDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DoctorViewHolder {
         val binding = ListItemDoctorBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -24,7 +24,7 @@ class DoctorAdapter : PagingDataAdapter<Doctor, DoctorAdapter.DoctorViewHolder>(
 
     inner class DoctorViewHolder(private val binding: ListItemDoctorBinding): RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
-        fun bind(item: Doctor?) {
+        fun bind(item: DoctorR?) {
             item?.let { doctor ->
                 binding.tvDoctorName.text = "${doctor.firstName} ${doctor.lastName}"
                 binding.tvMobileNumber.text = doctor.mobileNumber.toString()
@@ -35,8 +35,8 @@ class DoctorAdapter : PagingDataAdapter<Doctor, DoctorAdapter.DoctorViewHolder>(
         }
     }
 
-    class DoctorDiffUtil : DiffUtil.ItemCallback<Doctor>() {
-        override fun areItemsTheSame(oldItem: Doctor, newItem: Doctor): Boolean = oldItem.doctorId == newItem.doctorId
-        override fun areContentsTheSame(oldItem: Doctor, newItem: Doctor): Boolean = oldItem == newItem
+    class DoctorDiffUtil : DiffUtil.ItemCallback<DoctorR>() {
+        override fun areItemsTheSame(oldItem: DoctorR, newItem: DoctorR): Boolean = oldItem.doctorId == newItem.doctorId
+        override fun areContentsTheSame(oldItem: DoctorR, newItem: DoctorR): Boolean = oldItem == newItem
     }
 }

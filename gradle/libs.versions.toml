@@ -21,6 +21,7 @@ circleimageview="3.1.0"
 kotlinPlugin = "1.9.22"
 sageArgs = "2.7.7"
 paging="3.2.1"
+jodaTime="2.12.2"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -56,6 +57,8 @@ androidx-splashscreen = { group = "androidx.core", name = "core-splashscreen", v
 hdodenhof-circleimageview = { group = "de.hdodenhof", name = "circleimageview", version.ref = "circleimageview" }
 # Paging
 androidx-paging = { group = "androidx.paging", name = "paging-runtime-ktx", version.ref = "paging" }
+# Joda Time
+joda-time = { group = "joda-time", name = "joda-time", version.ref = "jodaTime" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

@@ -1,6 +1,6 @@
 package app.qup.doctor_management.data.remote.dto.general
 
-import app.qup.doctor_management.domain.model.Doctor
+import app.qup.doctor_management.domain.model.DoctorR
 
 data class DoctorSearchResource(
     val appUserId: String?,
@@ -20,8 +20,8 @@ data class DoctorSearchResource(
     val specialitySet: List<SpecialitySet>?
 )
 
-fun DoctorSearchResource.toDoctor(): Doctor {
-    return Doctor(
+fun DoctorSearchResource.toDoctor(): DoctorR {
+    return DoctorR(
         appUserId = appUserId ?: "",
         communicationType = communicationType ?: mutableListOf(),
         conductsOPDAtEntity = conductsOPDAtEntity ?: mutableListOf(),

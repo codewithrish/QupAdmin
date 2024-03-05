@@ -5,6 +5,7 @@ import app.qup.util.BuildConfig
 
 // val BASE_URL = "https://api.qupdev.com/"
 val BASE_URL = if (BuildConfig.DEBUG) "https://dev-business.qupdev.com:8765/" else "https://api.qupdev.com/"
+val DEFAULT_LANGUAGE_ID =  if (BASE_URL == "https://api.qupdev.com/") "5af17b7ec6bb84acde661f2d" else "60d5a7e0fb004f000c6ad86a"
 
 const val QUP_SHARED_PREFERENCE = "QUP_SHARED_PREFERENCE"
 const val QUP_DATASTORE_PREFS = "QUP_DATASTORE_PREFS"

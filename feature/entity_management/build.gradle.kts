@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.ksp)
     // Hilt
     alias(libs.plugins.daggerHilt)
+    // Sage Args
+    alias(libs.plugins.safe.args)
 }
 
 android {
@@ -42,4 +44,6 @@ dependencies {
     implementation(libs.squareup.logging.interceptor)
     // Paging
     implementation(libs.androidx.paging)
+    // Joda Time
+    implementation(libs.joda.time)
 }

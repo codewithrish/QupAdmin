@@ -9,5 +9,14 @@
         android:id="@+id/searchReceptionFragment"
         android:name="app.qup.reception_management.presentation.search_reception.SearchReceptionFragment"
         android:label="Search Reception"
-        tools:layout="@layout/fragment_search_reception" />
+        tools:layout="@layout/fragment_search_reception" >
+        <action
+            android:id="@+id/action_searchReceptionFragment_to_addReceptionFragment"
+            app:destination="@id/addReceptionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addReceptionFragment"
+        android:name="app.qup.reception_management.presentation.add_reception.AddReceptionFragment"
+        android:label="Add Reception"
+        tools:layout="@layout/fragment_add_reception" />
 </navigation>

@@ -18,7 +18,7 @@ class SearchUserByNumberUseCase @Inject constructor(
         send(SearchUserByNumberState(isLoading = true))
         try {
             withContext(Dispatchers.IO) {
-                srkRepository.searchReceptionByNumber(role, mobileNumber).also {
+                srkRepository.searchSrkByNumber(role, mobileNumber).also {
                     withContext(Dispatchers.Main) {
                         if (it.isSuccessful) {
                             send(

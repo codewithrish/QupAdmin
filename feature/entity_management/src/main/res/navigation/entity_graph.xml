@@ -7,7 +7,16 @@
 
     <fragment
         android:id="@+id/searchEntityFragment"
-        android:name="com.codewithrish.entity_management.presentation.search_entity.SearchEntityFragment"
+        android:name="app.qup.entity_management.presentation.search_entity.SearchEntityFragment"
         android:label="Search Entity"
-        tools:layout="@layout/fragment_search_entity" />
+        tools:layout="@layout/fragment_search_entity" >
+        <action
+            android:id="@+id/action_searchEntityFragment_to_addEntityFragment"
+            app:destination="@id/addEntityFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addEntityFragment"
+        android:name="app.qup.entity_management.presentation.add_entity.AddEntityFragment"
+        android:label="Add Entity"
+        tools:layout="@layout/fragment_add_entity" />
 </navigation>

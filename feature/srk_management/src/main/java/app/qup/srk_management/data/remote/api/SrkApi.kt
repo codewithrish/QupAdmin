@@ -1,6 +1,7 @@
 package app.qup.srk_management.data.remote.api
 
 import app.qup.srk_management.data.remote.dto.general.SrkResource
+import app.qup.srk_management.data.remote.dto.request.AddSrkRequestDto
 import app.qup.srk_management.data.remote.dto.request.SearchUserRequestDto
 import app.qup.srk_management.data.remote.dto.response.AllSrkResponseDto
 import retrofit2.Response
@@ -16,5 +17,9 @@ interface SrkApi {
     @POST("userauth/users/with-role-and-name")
     suspend fun searchSrkByName(@Body searchUserRequestDto: SearchUserRequestDto): Response<List<SrkResource>>
     @GET("userauth/users/with-role/{role}/mobile/{mobileNumber}")
-    suspend fun searchReceptionByNumber(@Path("role") role: String, @Path("mobileNumber") mobileNumber: String): Response<SrkResource>
+    suspend fun searchSrkByNumber(@Path("role") role: String, @Path("mobileNumber") mobileNumber: String): Response<SrkResource>
+    @POST("userauth/users/")
+    suspend fun addSrk(@Body addSrkRequestDto: AddSrkRequestDto): Response<SrkResource>
+    @GET("master-service/master/common/gender")
+    suspend fun getGenders(): Response<List<String>>
 }

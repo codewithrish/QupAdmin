@@ -1,6 +1,7 @@
 package app.qup.reception_management.data.remote.api
 
 import app.qup.reception_management.data.remote.dto.general.ReceptionResource
+import app.qup.reception_management.data.remote.dto.request.AddReceptionRequestDto
 import app.qup.reception_management.data.remote.dto.request.SearchUserRequestDto
 import app.qup.reception_management.data.remote.dto.response.AllReceptionsResponseDto
 import retrofit2.Response
@@ -17,4 +18,8 @@ interface ReceptionApi {
     suspend fun searchReceptionByName(@Body searchUserRequestDto: SearchUserRequestDto): Response<List<ReceptionResource>>
     @GET("userauth/users/with-role/{role}/mobile/{mobileNumber}")
     suspend fun searchReceptionByNumber(@Path("role") role: String, @Path("mobileNumber") mobileNumber: String): Response<ReceptionResource>
+    @POST("userauth/users/")
+    suspend fun addReception(@Body addReceptionRequestDto: AddReceptionRequestDto): Response<ReceptionResource>
+    @GET("master-service/master/common/gender")
+    suspend fun getGenders(): Response<List<String>>
 }

@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import app.qup.srk_management.data.paging.GetAllSrkPagingData
 import app.qup.srk_management.data.remote.api.SrkApi
 import app.qup.srk_management.data.remote.dto.general.SrkResource
+import app.qup.srk_management.data.remote.dto.request.AddSrkRequestDto
 import app.qup.srk_management.data.remote.dto.request.SearchUserRequestDto
 import app.qup.srk_management.domain.repository.SrkRepository
 import kotlinx.coroutines.flow.Flow
@@ -26,10 +27,18 @@ class SrkRepositoryImpl @Inject constructor(
         return srkApi.searchSrkByName(searchUserRequestDto)
     }
 
-    override suspend fun searchReceptionByNumber(
+    override suspend fun searchSrkByNumber(
         role: String,
         mobileNumber: String
     ): Response<SrkResource> {
-        return srkApi.searchReceptionByNumber(role, mobileNumber)
+        return srkApi.searchSrkByNumber(role, mobileNumber)
+    }
+
+    override suspend fun addSrk(addSrkRequestDto: AddSrkRequestDto): Response<SrkResource> {
+        return srkApi.addSrk(addSrkRequestDto)
+    }
+
+    override suspend fun getGenders(): Response<List<String>> {
+        return srkApi.getGenders()
     }
 }

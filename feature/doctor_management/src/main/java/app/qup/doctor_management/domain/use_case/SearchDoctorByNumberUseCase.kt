@@ -1,7 +1,7 @@
 package app.qup.doctor_management.domain.use_case
 
 import app.qup.doctor_management.data.remote.dto.general.toDoctor
-import app.qup.doctor_management.domain.model.Doctor
+import app.qup.doctor_management.domain.model.DoctorR
 import app.qup.doctor_management.domain.repository.DoctorRepository
 import app.qup.network.common.parseErrorResponse
 import kotlinx.coroutines.Dispatchers
@@ -24,7 +24,7 @@ class SearchDoctorByNumberUseCase @Inject constructor(
                             send(
                                 SearchDoctorByNumberState(
                                     isLoading = false,
-                                    doctor = it.body()?.toDoctor()
+                                    doctorR = it.body()?.toDoctor()
                                 )
                             )
                         } else {
@@ -44,5 +44,5 @@ class SearchDoctorByNumberUseCase @Inject constructor(
 }
 
 data class SearchDoctorByNumberState(
-    val isLoading: Boolean = false, val doctor: Doctor? = null, val error: String? = ""
+    val isLoading: Boolean = false, val doctorR: DoctorR? = null, val error: String? = ""
 )

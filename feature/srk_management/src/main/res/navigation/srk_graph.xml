@@ -9,5 +9,14 @@
         android:id="@+id/searchSrkFragment"
         android:name="app.qup.srk_management.presentation.search_srk.SearchSrkFragment"
         android:label="Search SRK"
-        tools:layout="@layout/fragment_search_srk" />
+        tools:layout="@layout/fragment_search_srk" >
+        <action
+            android:id="@+id/action_searchSrkFragment_to_addSrkFragment"
+            app:destination="@id/addSrkFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addSrkFragment"
+        android:name="app.qup.srk_management.presentation.add_srk.AddSrkFragment"
+        android:label="Add SRK"
+        tools:layout="@layout/fragment_add_srk" />
 </navigation>

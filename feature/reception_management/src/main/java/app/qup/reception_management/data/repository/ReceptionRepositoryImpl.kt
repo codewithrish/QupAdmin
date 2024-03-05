@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import app.qup.reception_management.data.paging.GetAllReceptionsPagingData
 import app.qup.reception_management.data.remote.api.ReceptionApi
 import app.qup.reception_management.data.remote.dto.general.ReceptionResource
+import app.qup.reception_management.data.remote.dto.request.AddReceptionRequestDto
 import app.qup.reception_management.data.remote.dto.request.SearchUserRequestDto
 import app.qup.reception_management.domain.repository.ReceptionRepository
 import kotlinx.coroutines.flow.Flow
@@ -34,5 +35,13 @@ class ReceptionRepositoryImpl @Inject constructor(
         mobileNumber: String
     ): Response<ReceptionResource> {
         return receptionApi.searchReceptionByNumber(role, mobileNumber)
+    }
+
+    override suspend fun addReception(addReceptionRequestDto: AddReceptionRequestDto): Response<ReceptionResource> {
+        return receptionApi.addReception(addReceptionRequestDto)
+    }
+
+    override suspend fun getGenders(): Response<List<String>> {
+        return receptionApi.getGenders()
     }
 }

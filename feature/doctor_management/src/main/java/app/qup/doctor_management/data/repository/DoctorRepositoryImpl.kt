@@ -7,6 +7,8 @@ import app.qup.doctor_management.data.paging.GetAllDoctorsPagingData
 import app.qup.doctor_management.data.paging.SearchDoctorsByNamePagingData
 import app.qup.doctor_management.data.remote.api.DoctorApi
 import app.qup.doctor_management.data.remote.dto.general.DoctorSearchResource
+import app.qup.doctor_management.data.remote.dto.request.DoctorRequestDto
+import app.qup.doctor_management.data.remote.dto.response.DoctorResponseDto
 import app.qup.doctor_management.domain.repository.DoctorRepository
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
@@ -41,5 +43,13 @@ class DoctorRepositoryImpl @Inject constructor(
 
     override suspend fun searchDoctorByNumber(mobileNumber: String): Response<DoctorSearchResource> {
         return doctorApi.searchDoctorByNumber(mobileNumber)
+    }
+
+    override suspend fun addDoctor(doctorRequestDto: DoctorRequestDto): Response<DoctorResponseDto> {
+        return doctorApi.addDoctor(doctorRequestDto)
+    }
+
+    override suspend fun getGenders(): Response<List<String>> {
+        return doctorApi.getGenders()
     }
 }

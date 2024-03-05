@@ -9,5 +9,14 @@
         android:id="@+id/searchDoctorFragment"
         android:name="app.qup.doctor_management.presentation.search_doctor.SearchDoctorFragment"
         android:label="Search Doctor"
-        tools:layout="@layout/fragment_search_doctor" />
+        tools:layout="@layout/fragment_search_doctor" >
+        <action
+            android:id="@+id/action_searchDoctorFragment_to_addDoctorFragment"
+            app:destination="@id/addDoctorFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addDoctorFragment"
+        android:name="app.qup.doctor_management.presentation.add_doctor.AddDoctorFragment"
+        android:label="Add Doctor"
+        tools:layout="@layout/fragment_add_doctor" />
 </navigation>

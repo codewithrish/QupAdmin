@@ -30,11 +30,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                app.qup.home.R.id.homeFragment,
-                app.qup.doctor_management.R.id.searchDoctorFragment,
-                app.qup.reception_management.R.id.searchReceptionFragment,
-                app.qup.srk_management.R.id.searchSrkFragment,
-                com.codewithrish.entity_management.R.id.searchEntityFragment
+                app.qup.home.R.id.homeFragment
             )
         )
         val navHostFragment = supportFragmentManager.findFragmentById(
