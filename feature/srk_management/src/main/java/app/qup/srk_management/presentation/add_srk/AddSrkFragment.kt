@@ -113,7 +113,7 @@ class AddSrkFragment : Fragment(), MenuProvider {
                 addSrkViewModel.addSrk(
                     addSrkRequestDto = AddSrkRequestDto(
                         bloodGroup = "$selectedBloodGroup$selectedBloodType",
-                        dateOfBirth = DateTime(mSDF.parse(dobText), DateTimeZone.UTC).toString(),
+                        dateOfBirth = if (dobText.isEmpty()) null else DateTime(mSDF.parse(dobText), DateTimeZone.UTC).toString(),
                         emailId = emailId.ifEmpty { null },
                         firstName = firstName,
                         lastName = lastName,
