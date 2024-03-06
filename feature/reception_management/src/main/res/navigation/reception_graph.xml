@@ -17,6 +17,12 @@
     <fragment
         android:id="@+id/addReceptionFragment"
         android:name="app.qup.reception_management.presentation.add_reception.AddReceptionFragment"
-        android:label="Add Reception"
-        tools:layout="@layout/fragment_add_reception" />
+        android:label="Add, Update Reception"
+        tools:layout="@layout/fragment_add_reception" >
+        <argument
+            android:name="mobileNumber"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
 </navigation>

@@ -14,5 +14,5 @@ data class AddReceptionRequestDto(
     val prefix: String? = null,
     val profilePicturePath: String? = null,
     val requestedRole: String? = null,
-    val volunteerForBloodDonation: String? = null
+    val volunteerForBloodDonation: String? = "LATER"
 )

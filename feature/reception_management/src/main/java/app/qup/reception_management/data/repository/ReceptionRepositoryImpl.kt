@@ -41,7 +41,25 @@ class ReceptionRepositoryImpl @Inject constructor(
         return receptionApi.addReception(addReceptionRequestDto)
     }
 
+    override suspend fun getUserByMobileNumber(mobileNumber: String): Response<ReceptionResource> {
+        return receptionApi.getUserByMobileNumber(mobileNumber)
+    }
+
+    override suspend fun updateUser(
+        mobileNumber: String,
+        addReceptionRequestDto: AddReceptionRequestDto
+    ): Response<ReceptionResource> {
+        return receptionApi.updateUser(mobileNumber, addReceptionRequestDto)
+    }
+
     override suspend fun getGenders(): Response<List<String>> {
         return receptionApi.getGenders()
+    }
+
+    override suspend fun checkRoleEligibility(
+        mobileNumber: String,
+        role: String
+    ): Response<ReceptionResource> {
+        return receptionApi.checkRoleEligibility(mobileNumber, role)
     }
 }

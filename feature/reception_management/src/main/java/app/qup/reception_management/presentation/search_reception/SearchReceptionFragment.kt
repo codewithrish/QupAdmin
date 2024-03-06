@@ -66,6 +66,9 @@ class SearchReceptionFragment : Fragment(), MenuProvider {
     private fun setupAdapter() {
         receptionAdapter = ReceptionAdapter()
         binding.rvReceptions.adapter = receptionAdapter
+        receptionAdapter.onClick = {
+            goToUpdate(it.mobileNumber.toString())
+        }
     }
 
     private fun setupPaginatedAdapter() {
@@ -74,6 +77,16 @@ class SearchReceptionFragment : Fragment(), MenuProvider {
             header = LoaderAdapter(),
             footer = LoaderAdapter()
         )
+        receptionPaginatedAdapter.onClick = {
+            goToUpdate(it.mobileNumber.toString())
+        }
+    }
+
+    private fun goToUpdate(mobileNumber: String) {
+        val action = SearchReceptionFragmentDirections.actionSearchReceptionFragmentToAddReceptionFragment(
+            mobileNumber = mobileNumber
+        )
+        navController?.safeNavigate(action)
     }
 
     private fun searchUser() {

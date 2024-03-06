@@ -17,6 +17,12 @@
     <fragment
         android:id="@+id/addSrkFragment"
         android:name="app.qup.srk_management.presentation.add_srk.AddSrkFragment"
-        android:label="Add SRK"
-        tools:layout="@layout/fragment_add_srk" />
+        android:label="Add, Update SRK"
+        tools:layout="@layout/fragment_add_srk" >
+        <argument
+            android:name="mobileNumber"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
 </navigation>

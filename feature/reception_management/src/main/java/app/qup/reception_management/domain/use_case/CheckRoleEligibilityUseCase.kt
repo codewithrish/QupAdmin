@@ -2,7 +2,6 @@ package app.qup.reception_management.domain.use_case
 
 import app.qup.network.common.parseErrorResponse
 import app.qup.reception_management.data.remote.dto.general.toReception
-import app.qup.reception_management.data.remote.dto.request.AddReceptionRequestDto
 import app.qup.reception_management.domain.model.Reception
 import app.qup.reception_management.domain.repository.ReceptionRepository
 import kotlinx.coroutines.Dispatchers
@@ -10,23 +9,25 @@ import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class AddReceptionUseCase @Inject constructor(
+
+class CheckRoleEligibilityUseCase @Inject constructor(
     private val receptionRepository: ReceptionRepository
 ) {
     operator fun invoke(
-        addReceptionRequestDto: AddReceptionRequestDto
+        mobileNumber: String, 
+        role: String
     ) = channelFlow {
-        send(ReceptionState(isLoading = true))
+        send(CheckRoleEligibilityState(isLoading = true))
         try {
             withContext(Dispatchers.IO) {
-                receptionRepository.addReception(addReceptionRequestDto).also {
+                receptionRepository.checkRoleEligibility(mobileNumber, role).also {
                     withContext(Dispatchers.Main) {
                         if (it.isSuccessful) {
-                            send(ReceptionState(isLoading = false, reception = it.body()?.toReception()))
+                            send(CheckRoleEligibilityState(isLoading = false, reception = it.body()?.toReception()))
                         } else {
                             send(
-                                ReceptionState(
-                                    isLoading = false, error = parseErrorResponse(it.errorBody())
+                                CheckRoleEligibilityState(
+                                    isLoading = false, error = parseErrorResponse(it.errorBody()), errorCode = it.code()
                                 )
                             )
                         }
@@ -34,13 +35,14 @@ class AddReceptionUseCase @Inject constructor(
                 }
             }
         } catch (e: Exception) {
-            send(ReceptionState(isLoading = false, error = e.localizedMessage))
+            send(CheckRoleEligibilityState(isLoading = false, error = e.localizedMessage))
         }
     }
 }
 
-data class ReceptionState(
+data class CheckRoleEligibilityState(
     val isLoading: Boolean = false,
     val reception: Reception? = null,
-    val error: String? = ""
+    val error: String? = "",
+    val errorCode: Int = 0
 )

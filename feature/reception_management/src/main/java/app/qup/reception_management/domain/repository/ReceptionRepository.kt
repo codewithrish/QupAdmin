@@ -12,5 +12,8 @@ interface ReceptionRepository {
     suspend fun searchReceptionByName(searchUserRequestDto: SearchUserRequestDto): Response<List<ReceptionResource>>
     suspend fun searchReceptionByNumber(role: String, mobileNumber: String): Response<ReceptionResource>
     suspend fun addReception(addReceptionRequestDto: AddReceptionRequestDto): Response<ReceptionResource>
+    suspend fun getUserByMobileNumber(mobileNumber: String): Response<ReceptionResource>
+    suspend fun updateUser(mobileNumber: String,addReceptionRequestDto: AddReceptionRequestDto): Response<ReceptionResource>
     suspend fun getGenders(): Response<List<String>>
+    suspend fun checkRoleEligibility(mobileNumber: String, role: String): Response<ReceptionResource>
 }

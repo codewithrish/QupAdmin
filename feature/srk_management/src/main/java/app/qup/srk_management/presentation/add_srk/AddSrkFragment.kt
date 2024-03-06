@@ -11,16 +11,21 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import app.qup.srk_management.data.remote.dto.request.AddSrkRequestDto
 import app.qup.srk_management.databinding.FragmentAddSrkBinding
+import app.qup.srk_management.domain.model.Srk
 import app.qup.ui.common.snack
 import app.qup.util.common.LOCAL_DATE_FORMAT
 import app.qup.util.common.UserRole
+import app.qup.util.common.millisToDateString
 import app.qup.util.common.transformIntoDatePicker
 import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,6 +40,7 @@ class AddSrkFragment : Fragment(), MenuProvider {
     private val binding get() = _binding!!
 
     private val navController: NavController? by lazy { view?.findNavController() }
+    private val args by navArgs<AddSrkFragmentArgs>()
 
     private val addSrkViewModel by viewModels<AddSrkViewModel>()
 
@@ -65,6 +71,27 @@ class AddSrkFragment : Fragment(), MenuProvider {
         loadGenders()
         addReception()
         bloodGroupLister()
+
+        getUserData()
+
+        binding.etMobileNumber.isEnabled = args.mobileNumber == null
+        args.mobileNumber?.let {
+            binding.etMobileNumber.setText(args.mobileNumber)
+        }
+        binding.btnSubmit.text = if (args.mobileNumber == null) "Submit" else "Update"
+
+        etMobileListener()
+    }
+
+    private fun getUserData() {
+        args.mobileNumber?.let {
+            addSrkViewModel.getUser(it)
+        }
+        addSrkViewModel.getUser.observe(viewLifecycleOwner) {
+            it.srk?.let { srk ->
+                fillUserData(srk)
+            }
+        }
     }
 
     private fun bloodGroupLister() {
@@ -110,21 +137,43 @@ class AddSrkFragment : Fragment(), MenuProvider {
                 val lastName = binding.etLastName.text.toString()
                 val emailId = binding.etEmail.text.toString()
                 val dobText = binding.etDob.text.toString()
-                addSrkViewModel.addSrk(
-                    addSrkRequestDto = AddSrkRequestDto(
-                        bloodGroup = "$selectedBloodGroup$selectedBloodType",
-                        dateOfBirth = if (dobText.isEmpty()) null else DateTime(mSDF.parse(dobText), DateTimeZone.UTC).toString(),
-                        emailId = emailId.ifEmpty { null },
-                        firstName = firstName,
-                        lastName = lastName,
-                        gender = selectedGender,
-                        mobileNumber = mobileNumber.toLong(),
-                        requestedRole = UserRole.VIRTUAL_RECEPTION.name,
+
+                args.mobileNumber?.let {
+                    addSrkViewModel.updateUser(
+                        mobileNumber = args.mobileNumber ?: "",
+                        addSrkRequestDto = AddSrkRequestDto(
+                            bloodGroup = "$selectedBloodGroup$selectedBloodType",
+                            dateOfBirth = if (dobText.isEmpty()) null else DateTime(mSDF.parse(dobText), DateTimeZone.UTC).toString(),
+                            emailId = emailId.ifEmpty { null },
+                            firstName = firstName,
+                            lastName = lastName,
+                            gender = selectedGender,
+                            mobileNumber = mobileNumber.toLong(),
+                            requestedRole = UserRole.VIRTUAL_RECEPTION.name,
+                        )
                     )
-                )
+                } ?: run {
+                    addSrkViewModel.addSrk(
+                        addSrkRequestDto = AddSrkRequestDto(
+                            bloodGroup = "$selectedBloodGroup$selectedBloodType",
+                            dateOfBirth = if (dobText.isEmpty()) null else DateTime(mSDF.parse(dobText), DateTimeZone.UTC).toString(),
+                            emailId = emailId.ifEmpty { null },
+                            firstName = firstName,
+                            lastName = lastName,
+                            gender = selectedGender,
+                            mobileNumber = mobileNumber.toLong(),
+                            requestedRole = UserRole.VIRTUAL_RECEPTION.name,
+                        )
+                    )
+                }
             }
         }
         addSrkViewModel.addSrk.observe(viewLifecycleOwner) {
+            it.srk?.let {
+                navController?.popBackStack()
+            }
+        }
+        addSrkViewModel.updateUser.observe(viewLifecycleOwner) {
             it.srk?.let {
                 navController?.popBackStack()
             }
@@ -167,6 +216,78 @@ class AddSrkFragment : Fragment(), MenuProvider {
             return false
         }
         return true
+    }
+
+    private fun etMobileListener() {
+        binding.etMobileNumber.addTextChangedListener {
+            val query = it.toString()
+            if (query.length == 10) {
+                addSrkViewModel.checkRoleEligibility(
+                    mobileNumber = query,
+                    role = UserRole.VIRTUAL_RECEPTION.name
+                )
+            } else {
+                binding.etFirstName.setText("")
+                binding.etLastName.setText("")
+                binding.rgGender.clearCheck()
+                binding.etDob.setText("")
+                binding.etEmail.setText("")
+                binding.tgBloodGroup.clearChecked()
+                binding.tgBloodType.clearChecked()
+
+                binding.lblError.isVisible = false
+            }
+        }
+        addSrkViewModel.roleEligibility.observe(viewLifecycleOwner) {
+            it.srk?.let { srk ->
+                fillUserData(srk)
+            }
+            it.error?.let { error ->
+                if (it.errorCode == 409) {
+                    binding.lblError.isVisible = true
+                    binding.lblError.text = error
+                } else {
+                    binding.lblError.isVisible = false
+                }
+            }
+        }
+    }
+
+    private fun fillUserData(srk: Srk) {
+        binding.etFirstName.setText(srk.firstName)
+        binding.etLastName.setText(srk.lastName)
+
+        val allRadioButtons = mutableListOf<RadioButton>()
+        for (i in 0 until binding.rgGender.childCount) {
+            allRadioButtons.add(binding.rgGender.getChildAt(i) as RadioButton)
+        }
+
+        allRadioButtons.forEach { radioButton ->
+            radioButton.isChecked = radioButton.text == srk.gender
+        }
+
+        binding.etDob.setText(millisToDateString(srk.dateOfBirth))
+        binding.etEmail.setText(srk.emailId)
+
+        val bloodGroup = srk.bloodGroup
+        val group = bloodGroup.replace("+", "").replace("-", "")
+        if (bloodGroup.isNotEmpty())
+            binding.tgBloodGroup.check(
+                when (group) {
+                    "A" -> binding.optionA.id
+                    "B" -> binding.optionB.id
+                    "AB" -> binding.optionAb.id
+                    "O" -> binding.optionO.id
+                    else -> -1
+                }
+            )
+        if (bloodGroup.contains("+")) {
+            binding.tgBloodType.check(binding.optionPositive.id)
+        } else if (bloodGroup.contains("-")) {
+            binding.tgBloodType.check(binding.optionNegative.id)
+        } else {
+            binding.tgBloodType.check(-1)
+        }
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {}

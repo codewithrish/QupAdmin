@@ -66,14 +66,27 @@ class SearchSrkFragment : Fragment(), MenuProvider {
     private fun setupAdapter() {
         srkAdapter = SrkAdapter()
         binding.rvSrks.adapter = srkAdapter
+        srkAdapter.onClick = {
+            goToUpdate(it.mobileNumber.toString())
+        }
     }
-    
+
     private fun setupPaginatedAdapter() {
         srkPaginatedAdapter = SrkPaginatedAdapter()
         binding.rvSrks.adapter = srkPaginatedAdapter.withLoadStateHeaderAndFooter(
             header = LoaderAdapter(),
             footer = LoaderAdapter()
         )
+        srkPaginatedAdapter.onClick = {
+            goToUpdate(it.mobileNumber.toString())
+        }
+    }
+
+    private fun goToUpdate(mobileNumber: String) {
+        val action = SearchSrkFragmentDirections.actionSearchSrkFragmentToAddSrkFragment(
+            mobileNumber = mobileNumber
+        )
+        navController?.safeNavigate(action)
     }
 
     private fun searchUser() {

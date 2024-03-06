@@ -12,6 +12,8 @@ import app.qup.util.common.millisToDateString
 
 class ReceptionAdapter : ListAdapter<Reception, ReceptionAdapter.DoctorViewHolder>(DoctorDiffUtil()) {
 
+    var onClick: ((Reception) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DoctorViewHolder {
         val binding = ListItemReceptionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return DoctorViewHolder(binding)
@@ -29,6 +31,10 @@ class ReceptionAdapter : ListAdapter<Reception, ReceptionAdapter.DoctorViewHolde
                 binding.tvMobileNumber.text = reception.mobileNumber.toString()
                 binding.tvGender.text = reception.gender
                 binding.tvDob.text = millisToDateString(reception.dateOfBirth)
+
+                itemView.setOnClickListener {
+                    onClick?.invoke(item)
+                }
             }
         }
     }

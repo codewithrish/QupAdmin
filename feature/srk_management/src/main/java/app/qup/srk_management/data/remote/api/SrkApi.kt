@@ -8,6 +8,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -20,6 +21,12 @@ interface SrkApi {
     suspend fun searchSrkByNumber(@Path("role") role: String, @Path("mobileNumber") mobileNumber: String): Response<SrkResource>
     @POST("userauth/users/")
     suspend fun addSrk(@Body addSrkRequestDto: AddSrkRequestDto): Response<SrkResource>
+    @GET("userauth/users/{mobileNumber}")
+    suspend fun getUserByMobileNumber(@Path("mobileNumber") mobileNumber: String): Response<SrkResource>
+    @PUT("userauth/users/{mobileNumber}")
+    suspend fun updateUser(@Path("mobileNumber") mobileNumber: String, @Body addSrkRequestDto: AddSrkRequestDto): Response<SrkResource>
     @GET("master-service/master/common/gender")
     suspend fun getGenders(): Response<List<String>>
+    @GET("userauth/users/{mobileNumber}/eligible-for-role/{role}")
+    suspend fun checkRoleEligibility(@Path("mobileNumber") mobileNumber: String, @Path("role") role: String): Response<SrkResource>
 }

@@ -12,5 +12,8 @@ interface SrkRepository {
     suspend fun searchSrkByName(searchUserRequestDto: SearchUserRequestDto): Response<List<SrkResource>>
     suspend fun searchSrkByNumber(role: String, mobileNumber: String): Response<SrkResource>
     suspend fun addSrk(addSrkRequestDto: AddSrkRequestDto): Response<SrkResource>
+    suspend fun getUserByMobileNumber(mobileNumber: String): Response<SrkResource>
+    suspend fun updateUser(mobileNumber: String, addSrkRequestDto: AddSrkRequestDto): Response<SrkResource>
     suspend fun getGenders(): Response<List<String>>
+    suspend fun checkRoleEligibility(mobileNumber: String, role: String): Response<SrkResource>
 }

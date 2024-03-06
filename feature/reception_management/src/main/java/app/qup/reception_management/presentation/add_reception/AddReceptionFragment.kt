@@ -11,16 +11,21 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import app.qup.reception_management.data.remote.dto.request.AddReceptionRequestDto
 import app.qup.reception_management.databinding.FragmentAddReceptionBinding
+import app.qup.reception_management.domain.model.Reception
 import app.qup.ui.common.snack
 import app.qup.util.common.LOCAL_DATE_FORMAT
 import app.qup.util.common.UserRole
+import app.qup.util.common.millisToDateString
 import app.qup.util.common.transformIntoDatePicker
 import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,6 +40,7 @@ class AddReceptionFragment : Fragment(), MenuProvider {
     private val binding get() = _binding!!
 
     private val navController: NavController? by lazy { view?.findNavController() }
+    private val args by navArgs<AddReceptionFragmentArgs>()
 
     private val addReceptionViewModel by viewModels<AddReceptionViewModel>()
 
@@ -65,6 +71,27 @@ class AddReceptionFragment : Fragment(), MenuProvider {
         loadGenders()
         addReception()
         bloodGroupLister()
+
+        getUserData()
+
+        binding.etMobileNumber.isEnabled = args.mobileNumber == null
+        args.mobileNumber?.let {
+            binding.etMobileNumber.setText(args.mobileNumber)
+        }
+        binding.btnSubmit.text = if (args.mobileNumber == null) "Submit" else "Update"
+
+        etMobileListener()
+    }
+
+    private fun getUserData() {
+        args.mobileNumber?.let {
+            addReceptionViewModel.getUser(it)
+        }
+        addReceptionViewModel.getUser.observe(viewLifecycleOwner) {
+            it.reception?.let { reception ->
+                fillUserData(reception)
+            }
+        }
     }
 
     private fun bloodGroupLister() {
@@ -110,21 +137,43 @@ class AddReceptionFragment : Fragment(), MenuProvider {
                 val lastName = binding.etLastName.text.toString()
                 val emailId = binding.etEmail.text.toString()
                 val dobText = binding.etDob.text.toString()
-                addReceptionViewModel.addReception(
-                    addReceptionRequestDto = AddReceptionRequestDto(
-                        bloodGroup = "$selectedBloodGroup$selectedBloodType",
-                        dateOfBirth = if (dobText.isEmpty()) null else DateTime(mSDF.parse(dobText), DateTimeZone.UTC).toString(),
-                        emailId = emailId.ifEmpty { null },
-                        firstName = firstName,
-                        lastName = lastName,
-                        gender = selectedGender,
-                        mobileNumber = mobileNumber.toLong(),
-                        requestedRole = UserRole.RECEPTIONIST.name,
+
+                args.mobileNumber?.let {
+                    addReceptionViewModel.updateUser(
+                        mobileNumber = args.mobileNumber ?: "",
+                        addReceptionRequestDto = AddReceptionRequestDto(
+                            bloodGroup = "$selectedBloodGroup$selectedBloodType",
+                            dateOfBirth = if (dobText.isEmpty()) null else DateTime(mSDF.parse(dobText), DateTimeZone.UTC).toString(),
+                            emailId = emailId.ifEmpty { null },
+                            firstName = firstName,
+                            lastName = lastName,
+                            gender = selectedGender,
+                            mobileNumber = mobileNumber.toLong(),
+                            requestedRole = UserRole.RECEPTIONIST.name,
+                        )
                     )
-                )
+                } ?: run {
+                    addReceptionViewModel.addReception(
+                        addReceptionRequestDto = AddReceptionRequestDto(
+                            bloodGroup = "$selectedBloodGroup$selectedBloodType",
+                            dateOfBirth = if (dobText.isEmpty()) null else DateTime(mSDF.parse(dobText), DateTimeZone.UTC).toString(),
+                            emailId = emailId.ifEmpty { null },
+                            firstName = firstName,
+                            lastName = lastName,
+                            gender = selectedGender,
+                            mobileNumber = mobileNumber.toLong(),
+                            requestedRole = UserRole.RECEPTIONIST.name,
+                        )
+                    )
+                }
             }
         }
         addReceptionViewModel.addReception.observe(viewLifecycleOwner) {
+            it.reception?.let {
+                navController?.popBackStack()
+            }
+        }
+        addReceptionViewModel.updateUser.observe(viewLifecycleOwner) {
             it.reception?.let {
                 navController?.popBackStack()
             }
@@ -167,6 +216,78 @@ class AddReceptionFragment : Fragment(), MenuProvider {
             return false
         }
         return true
+    }
+
+    private fun etMobileListener() {
+        binding.etMobileNumber.addTextChangedListener {
+            val query = it.toString()
+            if (query.length == 10) {
+                addReceptionViewModel.checkRoleEligibility(
+                    mobileNumber = query,
+                    role = UserRole.RECEPTIONIST.name
+                )
+            } else {
+                binding.etFirstName.setText("")
+                binding.etLastName.setText("")
+                binding.rgGender.clearCheck()
+                binding.etDob.setText("")
+                binding.etEmail.setText("")
+                binding.tgBloodGroup.clearChecked()
+                binding.tgBloodType.clearChecked()
+
+                binding.lblError.isVisible = false
+            }
+        }
+        addReceptionViewModel.roleEligibility.observe(viewLifecycleOwner) {
+            it.reception?.let { reception ->
+                fillUserData(reception)
+            }
+            it.error?.let { error ->
+                if (it.errorCode == 409) {
+                    binding.lblError.isVisible = true
+                    binding.lblError.text = error
+                } else {
+                    binding.lblError.isVisible = false
+                }
+            }
+        }
+    }
+
+    private fun fillUserData(reception: Reception) {
+        binding.etFirstName.setText(reception.firstName)
+        binding.etLastName.setText(reception.lastName)
+
+        val allRadioButtons = mutableListOf<RadioButton>()
+        for (i in 0 until binding.rgGender.childCount) {
+            allRadioButtons.add(binding.rgGender.getChildAt(i) as RadioButton)
+        }
+
+        allRadioButtons.forEach { radioButton ->
+            radioButton.isChecked = radioButton.text == reception.gender
+        }
+
+        binding.etDob.setText(millisToDateString(reception.dateOfBirth))
+        binding.etEmail.setText(reception.emailId)
+
+        val bloodGroup = reception.bloodGroup
+        val group = bloodGroup.replace("+", "").replace("-", "")
+        if (bloodGroup.isNotEmpty())
+            binding.tgBloodGroup.check(
+                when (group) {
+                    "A" -> binding.optionA.id
+                    "B" -> binding.optionB.id
+                    "AB" -> binding.optionAb.id
+                    "O" -> binding.optionO.id
+                    else -> -1
+                }
+            )
+        if (bloodGroup.contains("+")) {
+            binding.tgBloodType.check(binding.optionPositive.id)
+        } else if (bloodGroup.contains("-")) {
+            binding.tgBloodType.check(binding.optionNegative.id)
+        } else {
+            binding.tgBloodType.check(-1)
+        }
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {}

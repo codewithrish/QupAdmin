@@ -38,7 +38,25 @@ class SrkRepositoryImpl @Inject constructor(
         return srkApi.addSrk(addSrkRequestDto)
     }
 
+    override suspend fun getUserByMobileNumber(mobileNumber: String): Response<SrkResource> {
+        return srkApi.getUserByMobileNumber(mobileNumber)
+    }
+
+    override suspend fun updateUser(
+        mobileNumber: String,
+        addSrkRequestDto: AddSrkRequestDto
+    ): Response<SrkResource> {
+        return srkApi.updateUser(mobileNumber, addSrkRequestDto)
+    }
+
     override suspend fun getGenders(): Response<List<String>> {
         return srkApi.getGenders()
+    }
+
+    override suspend fun checkRoleEligibility(
+        mobileNumber: String,
+        role: String
+    ): Response<SrkResource> {
+        return srkApi.checkRoleEligibility(mobileNumber, role)
     }
 }

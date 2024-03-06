@@ -8,6 +8,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -20,6 +21,12 @@ interface ReceptionApi {
     suspend fun searchReceptionByNumber(@Path("role") role: String, @Path("mobileNumber") mobileNumber: String): Response<ReceptionResource>
     @POST("userauth/users/")
     suspend fun addReception(@Body addReceptionRequestDto: AddReceptionRequestDto): Response<ReceptionResource>
+    @GET("userauth/users/{mobileNumber}")
+    suspend fun getUserByMobileNumber(@Path("mobileNumber") mobileNumber: String): Response<ReceptionResource>
+    @PUT("userauth/users/{mobileNumber}")
+    suspend fun updateUser(@Path("mobileNumber") mobileNumber: String, @Body addReceptionRequestDto: AddReceptionRequestDto): Response<ReceptionResource>
     @GET("master-service/master/common/gender")
     suspend fun getGenders(): Response<List<String>>
+    @GET("userauth/users/{mobileNumber}/eligible-for-role/{role}")
+    suspend fun checkRoleEligibility(@Path("mobileNumber") mobileNumber: String, @Path("role") role: String): Response<ReceptionResource>
 }
