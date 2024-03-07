@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="8dp">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_registration_number"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/et_registration_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Registration Number*"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/lbl_reg_date_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Month and year of receiving registration number"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/til_registration_number"/>
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"/>
+
+    <TextView
+        android:id="@+id/lbl_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Year*"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_reg_date_time" />
+
+    <Spinner
+        android:id="@+id/sp_year"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:padding="0dp"
+        android:background="@drawable/shape_rectangle_border"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_year" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/sp_year"
+        app:layout_constraintEnd_toEndOf="@+id/sp_year"
+        app:layout_constraintTop_toTopOf="@+id/sp_year"
+        app:srcCompat="@drawable/ic_drop_down" />
+
+    <TextView
+        android:id="@+id/lbl_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Month*"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_reg_date_time" />
+
+    <Spinner
+        android:id="@+id/sp_month"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:padding="0dp"
+        android:background="@drawable/shape_rectangle_border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_month" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/sp_month"
+        app:layout_constraintEnd_toEndOf="@+id/sp_month"
+        app:layout_constraintTop_toTopOf="@+id/sp_month"
+        app:srcCompat="@drawable/ic_drop_down" />
+
+    <TextView
+        android:id="@+id/lbl_primary_deg"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Primary Degree"
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:background="?attr/colorSurfaceVariant"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sp_year"/>
+
+    <include
+        android:id="@+id/layout_primary_degree"
+        layout="@layout/list_item_degree"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_primary_deg" />
+
+    <TextView
+        android:id="@+id/lbl_other_deg"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Other Degrees"
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:background="?attr/colorSurfaceVariant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_primary_degree"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_other_degrees"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:nestedScrollingEnabled="false"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_other_deg" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/lbl_primary_speciality"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Primary Speciality"
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:background="?attr/colorSurfaceVariant"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <include
+        android:id="@+id/layout_primary_speciality"
+        layout="@layout/list_item_speciality"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_primary_speciality" />
+
+    <TextView
+        android:id="@+id/lbl_other_specialities"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Other Speciality"
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:background="?attr/colorSurfaceVariant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_primary_speciality"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_other_specialities"
+        android:layout_width="0dp"
+        android:nestedScrollingEnabled="false"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_other_specialities" />
+</androidx.constraintlayout.widget.ConstraintLayout>

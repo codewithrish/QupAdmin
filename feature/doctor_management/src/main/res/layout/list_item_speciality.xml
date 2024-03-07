@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
+
+    <TextView
+        android:id="@+id/lbl_select_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Category*"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <Spinner
+        android:id="@+id/sp_select_category"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/shape_rectangle_border"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_select_category" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/sp_select_category"
+        app:layout_constraintEnd_toEndOf="@+id/sp_select_category"
+        app:layout_constraintTop_toTopOf="@+id/sp_select_category"
+        app:srcCompat="@drawable/ic_drop_down" />
+
+    <TextView
+        android:id="@+id/lbl_select_speciality"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Speciality*"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <Spinner
+        android:id="@+id/sp_select_speciality"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/shape_rectangle_border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_select_speciality" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/sp_select_speciality"
+        app:layout_constraintEnd_toEndOf="@+id/sp_select_speciality"
+        app:layout_constraintTop_toTopOf="@+id/sp_select_speciality"
+        app:srcCompat="@drawable/ic_drop_down" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

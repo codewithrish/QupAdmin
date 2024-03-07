@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_mobile_number"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/et_mobile_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Mobile Number*"
+            android:maxLength="10"
+            android:inputType="number"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/lbl_error"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="Role Not Compatible"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        android:textColor="?attr/colorError"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/til_mobile_number"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_first_name"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_error">
+
+        <EditText
+            android:id="@+id/et_first_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="First Name*" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_last_name"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/til_first_name">
+
+        <EditText
+            android:id="@+id/et_last_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Last Name*" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/lbl_gender"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Gender*"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/til_last_name"/>
+
+    <RadioGroup
+        android:id="@+id/rg_gender"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_gender" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_dob"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rg_gender">
+
+        <EditText
+            android:id="@+id/et_dob"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Date of Birth" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_email"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/til_dob">
+
+        <EditText
+            android:id="@+id/et_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:hint="Email Address" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/lbl_blood_details"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Blood Details"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/til_email"/>
+
+    <TextView
+        android:id="@+id/lbl_blood_group"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Blood Group"
+        android:layout_marginTop="8dp"
+        android:textColor="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_blood_details"/>
+
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/tg_blood_group"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        app:checkedButton="@+id/option_block"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_blood_group"
+        app:selectionRequired="true"
+        app:singleSelection="true">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/option_a"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="0dp"
+            android:text="A"
+            android:textSize="11sp"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/option_b"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="0dp"
+            android:text="B"
+            android:textSize="11sp"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/option_ab"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="0dp"
+            android:text="AB"
+            android:textSize="11sp"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/option_o"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="0dp"
+            android:text="O"
+            android:textSize="11sp"
+            tools:ignore="TouchTargetSizeCheck" />
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+
+    <TextView
+        android:id="@+id/lbl_blood_type"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Blood Type"
+        android:layout_marginTop="8dp"
+        android:textColor="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tg_blood_group"/>
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/tg_blood_type"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        app:checkedButton="@+id/option_block"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_blood_type"
+        app:selectionRequired="true"
+        app:singleSelection="true">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/option_positive"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="0dp"
+            android:text="+"
+            android:textSize="11sp"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/option_negative"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="0dp"
+            android:text="-"
+            android:textSize="11sp"
+            tools:ignore="TouchTargetSizeCheck" />
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

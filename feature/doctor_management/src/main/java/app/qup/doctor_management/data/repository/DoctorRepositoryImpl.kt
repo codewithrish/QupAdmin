@@ -8,7 +8,11 @@ import app.qup.doctor_management.data.paging.SearchDoctorsByNamePagingData
 import app.qup.doctor_management.data.remote.api.DoctorApi
 import app.qup.doctor_management.data.remote.dto.general.DoctorSearchResource
 import app.qup.doctor_management.data.remote.dto.request.DoctorRequestDto
+import app.qup.doctor_management.data.remote.dto.response.AccoladeResponseDto
+import app.qup.doctor_management.data.remote.dto.response.DegreeResponseDto
 import app.qup.doctor_management.data.remote.dto.response.DoctorResponseDto
+import app.qup.doctor_management.data.remote.dto.response.SpecialityCategoryResponseDto
+import app.qup.doctor_management.data.remote.dto.response.SpecialityResponseDto
 import app.qup.doctor_management.domain.repository.DoctorRepository
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
@@ -51,5 +55,21 @@ class DoctorRepositoryImpl @Inject constructor(
 
     override suspend fun getGenders(): Response<List<String>> {
         return doctorApi.getGenders()
+    }
+
+    override suspend fun getActiveDegreeMaster(): Response<List<DegreeResponseDto>> {
+        return doctorApi.getActiveDegreeMaster()
+    }
+
+    override suspend fun getActiveSpecialityMaster(): Response<List<SpecialityResponseDto>> {
+        return doctorApi.getActiveSpecialityMaster()
+    }
+
+    override suspend fun getActiveSpecialityCategoryMaster(): Response<List<SpecialityCategoryResponseDto>> {
+        return doctorApi.getActiveSpecialityCategoryMaster()
+    }
+
+    override suspend fun getActiveAccolades(): Response<List<AccoladeResponseDto>> {
+        return doctorApi.getActiveAccolades()
     }
 }
