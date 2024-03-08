@@ -3,34 +3,6 @@
   <component name="deploymentTargetDropDown">
     <value>
       <entry key="app">
-        <State>
-          <targetSelectedWithDropDown>
-            <Target>
-              <type value="QUICK_BOOT_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="$USER_HOME$/.android/avd/Resizable_Experimental_API_34.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-03-04T08:34:37.075293Z" />
-        </State>
-      </entry>
-      <entry key="authentication">
-        <State />
-      </entry>
-      <entry key="core.network">
-        <State />
-      </entry>
-      <entry key="core.ui">
-        <State />
-      </entry>
-      <entry key="core.util">
-        <State />
-      </entry>
-      <entry key="network">
         <State />
       </entry>
     </value>

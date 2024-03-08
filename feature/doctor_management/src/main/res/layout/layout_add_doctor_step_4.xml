@@ -14,17 +14,31 @@
         android:padding="4dp"
         android:background="?attr/colorSurfaceVariant"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_add_accolades"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/btn_add_accolades"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="+Add Accolades"
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:textColor="?attr/colorPrimary"
+        android:background="?attr/colorSurfaceVariant"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_accolades"
         android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:nestedScrollingEnabled="false"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lbl_accolades" />
@@ -37,17 +51,30 @@
         android:textStyle="bold"
         android:padding="4dp"
         android:background="?attr/colorSurfaceVariant"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_add_medical_achievements"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_accolades"/>
+
+    <TextView
+        android:id="@+id/btn_add_medical_achievements"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="+Add Achievements"
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:textColor="?attr/colorPrimary"
+        android:background="?attr/colorSurfaceVariant"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rv_accolades"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_medical_achievements"
         android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:nestedScrollingEnabled="false"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lbl_medical_achievements" />
@@ -64,13 +91,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rv_medical_achievements"/>
 
+    <TextView
+        android:id="@+id/btn_add_non_medical_achievements"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="+Add Achievements"
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:textColor="?attr/colorPrimary"
+        android:background="?attr/colorSurfaceVariant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_medical_achievements"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_non_medical_achievements"
         android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:nestedScrollingEnabled="false"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lbl_non_medical_achievements" />

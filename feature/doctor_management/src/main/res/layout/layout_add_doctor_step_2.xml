@@ -132,8 +132,20 @@
         android:textStyle="bold"
         android:padding="4dp"
         android:background="?attr/colorSurfaceVariant"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_add_degree"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_primary_degree"/>
+
+    <TextView
+        android:id="@+id/btn_add_degree"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="+ Add Degree"
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:textColor="?attr/colorPrimary"
+        android:background="?attr/colorSurfaceVariant"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_primary_degree"/>
 
     <androidx.recyclerview.widget.RecyclerView

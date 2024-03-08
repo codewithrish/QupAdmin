@@ -5,21 +5,21 @@ import app.qup.doctor_management.data.remote.dto.general.QualificationDegreeSet
 import app.qup.doctor_management.data.remote.dto.general.SpecialitySet
 
 data class DoctorRequestDto(
-    val accoladesSet: List<AccoladesSet>,
-    val bloodGroup: String,
-    val communicationType: List<String>,
-    val dateOfBirth: String,
-    val emailId: String,
-    val firstName: String,
-    val gender: String,
-    val lastName: String,
-    val medicalAchievements: List<String>,
-    val mobileNumber: Long,
-    val nonMedicalAchievements: List<String>,
-    val preferredLanguageId: String,
-    val qualificationDegreeSet: List<QualificationDegreeSet>,
-    val registrationMonth: Int,
-    val registrationNumber: String,
-    val registrationYear: Int,
-    val specialitySet: List<SpecialitySet>
+    val accoladesSet: List<AccoladesSet>? = null,
+    val bloodGroup: String? = null,
+    val communicationType: List<String>? = null,
+    val dateOfBirth: String? = null,
+    val emailId: String? = null,
+    val firstName: String? = null,
+    val lastName: String? = null,
+    val gender: String? = null,
+    val medicalAchievements: List<String>? = null,
+    val mobileNumber: Long? = null,
+    val nonMedicalAchievements: List<String>? = null,
+    val preferredLanguageId: String? = null,
+    val qualificationDegreeSet: List<QualificationDegreeSet>? = null,
+    val registrationMonth: Int? = null,
+    val registrationNumber: String? = null,
+    val registrationYear: Int? = null,
+    val specialitySet: List<SpecialitySet>? = null
 )

@@ -28,7 +28,10 @@ class DoctorAdapter : PagingDataAdapter<DoctorR, DoctorAdapter.DoctorViewHolder>
             item?.let { doctor ->
                 binding.tvDoctorName.text = "${doctor.firstName} ${doctor.lastName}"
                 binding.tvMobileNumber.text = doctor.mobileNumber.toString()
-                binding.tvPrimarySpecDeg.text = "${doctor.specialitySet.filter { it1 -> it1.primary == true }[0].name}, ${doctor.qualificationDegreeSet.filter { it1 -> it1.primary == true }[0].name}"
+                val primaryDegrees = doctor.specialitySet.filter { it1 -> it1.primary == true }
+                if (primaryDegrees.isNotEmpty()) {
+                    binding.tvPrimarySpecDeg.text = "${doctor.specialitySet.filter { it1 -> it1.primary == true }[0].name}, ${doctor.qualificationDegreeSet.filter { it1 -> it1.primary == true }[0].name}"
+                }
                 binding.tvRegNo.text = doctor.registrationNumber
                 binding.tvProfileDates.text = "Creation : ${millisToDateString(doctor.createdAt)}, Modification : ${millisToDateString(doctor.lastModified)}"
             }
