@@ -15,6 +15,8 @@ import app.qup.doctor_management.domain.use_case.GetActiveSpecialityCategoryMast
 import app.qup.doctor_management.domain.use_case.GetActiveSpecialityMasterUseCase
 import app.qup.doctor_management.domain.use_case.GetGendersState
 import app.qup.doctor_management.domain.use_case.GetGendersUseCase
+import app.qup.doctor_management.domain.use_case.SearchDoctorByNumberState
+import app.qup.doctor_management.domain.use_case.SearchDoctorByNumberUseCase
 import app.qup.doctor_management.domain.use_case.SpecialityCategoryState
 import app.qup.doctor_management.domain.use_case.SpecialityState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,7 +31,8 @@ class AddDoctorViewModel @Inject constructor(
     private val getActiveAccoladesUseCase: GetActiveAccoladesUseCase,
     private val getActiveDegreeMasterUseCase: GetActiveDegreeMasterUseCase,
     private val getActiveSpecialityCategoryMasterUseCase: GetActiveSpecialityCategoryMasterUseCase,
-    private val getActiveSpecialityMasterUseCase: GetActiveSpecialityMasterUseCase
+    private val getActiveSpecialityMasterUseCase: GetActiveSpecialityMasterUseCase,
+    private val searchDoctorByNumberUseCase: SearchDoctorByNumberUseCase,
 ) : ViewModel() {
 
     val stepNumber: MutableLiveData<Int> = MutableLiveData(1)
@@ -57,14 +60,15 @@ class AddDoctorViewModel @Inject constructor(
     private val _specialities: MutableLiveData<SpecialityState> = MutableLiveData()
     val specialities: LiveData<SpecialityState>
         get() = _specialities
+    private val _searchDoctorByName: MutableLiveData<SearchDoctorByNumberState> = MutableLiveData()
+    val searchDoctorByName: LiveData<SearchDoctorByNumberState>
+        get() = _searchDoctorByName
 
 
     init {
         getGenders()
         getAccolades()
         getDegrees()
-        getSpecialityCategories()
-        getSpecialities()
     }
 
     fun addDoctor(
@@ -93,15 +97,23 @@ class AddDoctorViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun getSpecialityCategories() {
+    fun getSpecialityCategories() {
         getActiveSpecialityCategoryMasterUseCase().onEach {
             _specialityCategories.postValue(it)
         }.launchIn(viewModelScope)
     }
 
-    private fun getSpecialities() {
+    fun getSpecialities() {
         getActiveSpecialityMasterUseCase().onEach {
             _specialities.postValue(it)
+        }.launchIn(viewModelScope)
+    }
+
+    fun searchDoctorByName(
+        mobileNumber: String
+    ) {
+        searchDoctorByNumberUseCase(mobileNumber).onEach {
+            _searchDoctorByName.postValue(it)
         }.launchIn(viewModelScope)
     }
 }

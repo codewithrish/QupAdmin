@@ -1,7 +1,7 @@
 package app.qup.doctor_management.domain.use_case
 
-import app.qup.doctor_management.data.remote.dto.response.toAccolade
-import app.qup.doctor_management.domain.model.Accolade
+import app.qup.doctor_management.data.remote.dto.general.AccoladesSet
+import app.qup.doctor_management.data.remote.dto.response.toAccoladeSet
 import app.qup.doctor_management.domain.repository.DoctorRepository
 import app.qup.network.common.parseErrorResponse
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +22,7 @@ class GetActiveAccoladesUseCase @Inject constructor(
                             send(
                                 AccoladesState(
                                     isLoading = false,
-                                    accolades = it.body()?.map { it1 -> it1.toAccolade() }
+                                    accolades = it.body()?.map { it1 -> it1.toAccoladeSet() }
                                 )
                             )
                         } else {
@@ -42,5 +42,5 @@ class GetActiveAccoladesUseCase @Inject constructor(
 }
 
 data class AccoladesState(
-    val isLoading: Boolean = false, val accolades: List<Accolade>? = null, val error: String? = ""
+    val isLoading: Boolean = false, val accolades: List<AccoladesSet>? = null, val error: String? = ""
 )

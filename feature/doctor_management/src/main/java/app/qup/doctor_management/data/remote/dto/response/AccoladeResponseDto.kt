@@ -1,7 +1,7 @@
 package app.qup.doctor_management.data.remote.dto.response
 
+import app.qup.doctor_management.data.remote.dto.general.AccoladesSet
 import app.qup.doctor_management.data.remote.dto.general.Link
-import app.qup.doctor_management.domain.model.Accolade
 
 data class AccoladeResponseDto(
     val accoladeId: String?,
@@ -12,12 +12,11 @@ data class AccoladeResponseDto(
     val type: String?
 )
 
-fun AccoladeResponseDto.toAccolade(): Accolade {
-    return Accolade(
-        accoladeId = accoladeId ?: "",
-        active = active ?: false,
-        description = description ?: "",
-        iconName = iconName ?: "",
-        type = type ?: ""
+fun AccoladeResponseDto.toAccoladeSet(): AccoladesSet {
+    return AccoladesSet(
+        accoladeTypeId = accoladeId,
+        accoladeType = type,
+        iconName = iconName,
+        notes = null
     )
 }

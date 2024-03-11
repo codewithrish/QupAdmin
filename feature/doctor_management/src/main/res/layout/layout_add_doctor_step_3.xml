@@ -10,7 +10,7 @@
         android:id="@+id/lbl_primary_speciality"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Primary Speciality"
+        android:text="Primary Speciality*"
         android:textStyle="bold"
         android:padding="4dp"
         android:background="?attr/colorSurfaceVariant"
@@ -36,8 +36,20 @@
         android:textStyle="bold"
         android:padding="4dp"
         android:background="?attr/colorSurfaceVariant"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_add_speciality"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_primary_speciality"/>
+
+    <TextView
+        android:id="@+id/btn_add_speciality"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="+Add Speciality"
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:textColor="?attr/colorPrimary"
+        android:background="?attr/colorSurfaceVariant"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_primary_speciality"/>
 
     <androidx.recyclerview.widget.RecyclerView

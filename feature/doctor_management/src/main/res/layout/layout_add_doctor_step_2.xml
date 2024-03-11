@@ -106,7 +106,7 @@
         android:id="@+id/lbl_primary_deg"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Primary Degree"
+        android:text="Primary Degree*"
         android:textStyle="bold"
         android:padding="4dp"
         android:background="?attr/colorSurfaceVariant"
