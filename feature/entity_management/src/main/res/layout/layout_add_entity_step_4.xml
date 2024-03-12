@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/lbl_facilities"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Facilities"
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:background="?attr/colorSurfaceVariant"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/btn_add_facility"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/btn_add_facility"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="+Add Facility"
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:textColor="?attr/colorPrimary"
+        android:background="?attr/colorSurfaceVariant"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_facilities"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:nestedScrollingEnabled="false"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_facilities" />
+
+    <TextView
+        android:id="@+id/lbl_specialities"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Specialities"
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:background="?attr/colorSurfaceVariant"
+        app:layout_constraintEnd_toStartOf="@+id/btn_add_speciality"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_facilities"/>
+
+    <TextView
+        android:id="@+id/btn_add_speciality"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="+Add Speciality"
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:textColor="?attr/colorPrimary"
+        android:background="?attr/colorSurfaceVariant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_facilities"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_specialities"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:nestedScrollingEnabled="false"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_specialities" />
+
+    <TextView
+        android:id="@+id/lbl_services"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Services"
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:background="?attr/colorSurfaceVariant"
+        app:layout_constraintEnd_toStartOf="@+id/btn_add_service"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_specialities"/>
+
+    <TextView
+        android:id="@+id/btn_add_service"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="+Add Service"
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:textColor="?attr/colorPrimary"
+        android:background="?attr/colorSurfaceVariant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_specialities"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_services"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:nestedScrollingEnabled="false"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_services" />
+
+    <TextView
+        android:id="@+id/lbl_accolades"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Accolades"
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:background="?attr/colorSurfaceVariant"
+        app:layout_constraintEnd_toStartOf="@+id/btn_add_accolade"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_services"/>
+
+    <TextView
+        android:id="@+id/btn_add_accolade"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="+Add Accolade"
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:textColor="?attr/colorPrimary"
+        android:background="?attr/colorSurfaceVariant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_services"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_accolades"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:nestedScrollingEnabled="false"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_accolades" />
+
+    <TextView
+        android:id="@+id/lbl_achievements"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Achievements"
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:background="?attr/colorSurfaceVariant"
+        app:layout_constraintEnd_toStartOf="@+id/btn_add_achievement"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_accolades"/>
+
+    <TextView
+        android:id="@+id/btn_add_achievement"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="+Add Achievement"
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:textColor="?attr/colorPrimary"
+        android:background="?attr/colorSurfaceVariant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_accolades"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_achievements"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:nestedScrollingEnabled="false"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_achievements" />
+</androidx.constraintlayout.widget.ConstraintLayout>

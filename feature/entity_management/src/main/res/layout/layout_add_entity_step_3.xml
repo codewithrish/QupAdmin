@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/lbl_mobile_numbers"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Mobile Numbers"
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:background="?attr/colorSurfaceVariant"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/btn_add_mobile_no"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/btn_add_mobile_no"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="+Add Mobile No."
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:textColor="?attr/colorPrimary"
+        android:background="?attr/colorSurfaceVariant"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_mobile_numbers"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:nestedScrollingEnabled="false"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_mobile_numbers" />
+
+    <TextView
+        android:id="@+id/lbl_landline_numbers"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Landline Numbers"
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:background="?attr/colorSurfaceVariant"
+        app:layout_constraintEnd_toStartOf="@+id/btn_add_landline_number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_mobile_numbers"/>
+
+    <TextView
+        android:id="@+id/btn_add_landline_number"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="+Add Landline No."
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:textColor="?attr/colorPrimary"
+        android:background="?attr/colorSurfaceVariant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_mobile_numbers"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_landline_numbers"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:nestedScrollingEnabled="false"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_landline_numbers" />
+
+    <TextView
+        android:id="@+id/lbl_emails"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Email Ids"
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:background="?attr/colorSurfaceVariant"
+        app:layout_constraintEnd_toStartOf="@+id/btn_add_add_email"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_landline_numbers"/>
+
+    <TextView
+        android:id="@+id/btn_add_add_email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="+Add Email Id"
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:textColor="?attr/colorPrimary"
+        android:background="?attr/colorSurfaceVariant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_landline_numbers"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_emails"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:nestedScrollingEnabled="false"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_emails" />
+
+    <TextView
+        android:id="@+id/lbl_insurance"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Insurance Accepted Companies"
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:background="?attr/colorSurfaceVariant"
+        app:layout_constraintEnd_toStartOf="@+id/btn_add_company"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_emails"/>
+
+    <TextView
+        android:id="@+id/btn_add_company"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="+Add Company"
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:textColor="?attr/colorPrimary"
+        android:background="?attr/colorSurfaceVariant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_emails"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_insurance_companies"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:nestedScrollingEnabled="false"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_insurance" />
+
+    <TextView
+        android:id="@+id/lbl_entity_admin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Entity Admin"
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:visibility="gone"
+        android:background="?attr/colorSurfaceVariant"
+        app:layout_constraintEnd_toStartOf="@+id/btn_add_entity_admin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_insurance_companies"/>
+
+    <TextView
+        android:id="@+id/btn_add_entity_admin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="+Add Email Id"
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:visibility="gone"
+        android:textColor="?attr/colorPrimary"
+        android:background="?attr/colorSurfaceVariant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_insurance_companies"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_entity_admins"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:nestedScrollingEnabled="false"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_entity_admin" />
+</androidx.constraintlayout.widget.ConstraintLayout>

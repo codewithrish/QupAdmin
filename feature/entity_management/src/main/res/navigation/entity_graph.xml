@@ -17,6 +17,6 @@
     <fragment
         android:id="@+id/addEntityFragment"
         android:name="app.qup.entity_management.presentation.add_entity.AddEntityFragment"
-        android:label="Add Entity"
+        android:label="Add, Update Entity"
         tools:layout="@layout/fragment_add_entity" />
 </navigation>

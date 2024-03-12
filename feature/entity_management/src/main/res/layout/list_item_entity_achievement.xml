@@ -2,14 +2,15 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="8dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingBottom="8dp">
 
     <EditText
-        android:id="@+id/et_non_medical_achievements"
+        android:id="@+id/et_achievement"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Enter Non-Medical Achievement"
+        android:hint="Enter Achievement"
+        android:paddingBottom="8dp"
         android:background="@drawable/shape_rectangle_border"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

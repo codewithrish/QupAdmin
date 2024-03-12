@@ -9,7 +9,7 @@
         android:id="@+id/et_medical_achievements"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Enter Medical Achievements"
+        android:hint="Enter Medical Achievement"
         android:background="@drawable/shape_rectangle_border"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

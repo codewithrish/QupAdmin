@@ -1,5 +1,6 @@
 package app.qup.doctor_management.presentation.add_doctor
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Patterns
 import android.view.LayoutInflater
@@ -130,16 +131,20 @@ class AddDoctorFragment : Fragment(), MenuProvider {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun etMobileNumberListener() {
         binding.layoutStep1.etMobileNumber.addTextChangedListener {
             val mobileNumber = it.toString()
             if (mobileNumber.length == 10) {
                 addDoctorViewModel.searchDoctorByName(mobileNumber = mobileNumber)
+            } else {
+                binding.layoutStep1.lblError.isVisible = false
             }
         }
-        addDoctorViewModel.addDoctor.observe(viewLifecycleOwner) {
-            it.doctor?.let {
-
+        addDoctorViewModel.searchDoctorByName.observe(viewLifecycleOwner) {
+            it.doctorR?.let {
+                binding.layoutStep1.lblError.isVisible = true
+                binding.layoutStep1.lblError.text = "Doctor Already Exist With This Number"
             }
         }
     }
