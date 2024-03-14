@@ -61,6 +61,7 @@ class InsuranceAdapter @Inject constructor(
                 }
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
+            binding.spSelectInsurance.setSelection(insuranceCompanies.indexOf(item))
         }
     }
     class InsuranceDiffUtil: DiffUtil.ItemCallback<InsuranceCompanySet>() {

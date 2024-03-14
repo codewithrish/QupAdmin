@@ -6,6 +6,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import app.qup.util.common.isValidEmail
 import com.codewithrish.entity_management.databinding.ListItemEntityEmailIdBinding
 import javax.inject.Inject
 
@@ -25,8 +26,12 @@ class EmailIdAdapter @Inject constructor() : ListAdapter<String, EmailIdAdapter.
 
     inner class EmailIdViewHolder(private val binding: ListItemEntityEmailIdBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: String) {
+            binding.etEmailId.setText(item)
             binding.etEmailId.addTextChangedListener {
                 val input = it.toString()
+                if (input.isNotEmpty()) {
+                    binding.tilEmailId.error = if (!input.isValidEmail()) "Enter Valid Email" else null
+                }
                 onEmailTyping?.invoke(input, bindingAdapterPosition)
             }
         }

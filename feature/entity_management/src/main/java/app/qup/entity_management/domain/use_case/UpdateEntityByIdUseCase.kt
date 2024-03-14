@@ -10,27 +10,28 @@ import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class AddEntityUseCase @Inject constructor(
+class UpdateEntityByIdUseCase @Inject constructor(
     private val entityRepository: EntityRepository
 ) {
     operator fun invoke(
+        id: String,
         entityRequestDto: EntityRequestDto
     ) = channelFlow {
-        send(AddEntityState(isLoading = true))
+        send(UpdateEntityByIdState(isLoading = true))
         try {
             withContext(Dispatchers.IO) {
-                entityRepository.addEntity(entityRequestDto).also {
+                entityRepository.updateEntityById(id, entityRequestDto).also {
                     withContext(Dispatchers.Main) {
                         if (it.isSuccessful) {
                             send(
-                                AddEntityState(
+                                UpdateEntityByIdState(
                                     isLoading = false,
                                     entity = it.body()?.toEntity()
                                 )
                             )
                         } else {
                             send(
-                                AddEntityState(
+                                UpdateEntityByIdState(
                                     isLoading = false, error = parseErrorResponse(it.errorBody())
                                 )
                             )
@@ -39,11 +40,11 @@ class AddEntityUseCase @Inject constructor(
                 }
             }
         } catch (e: Exception) {
-            send(AddEntityState(isLoading = false, error = e.localizedMessage))
+            send(UpdateEntityByIdState(isLoading = false, error = e.localizedMessage))
         }
     }
 }
 
-data class AddEntityState(
+data class UpdateEntityByIdState(
     val isLoading: Boolean = false, val entity: Entity? = null, val error: String? = ""
 )

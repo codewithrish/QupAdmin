@@ -19,6 +19,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import app.qup.entity_management.data.remote.dto.general.EntityAccoladeSet
 import app.qup.entity_management.data.remote.dto.general.EntityServiceSet
 import app.qup.entity_management.data.remote.dto.general.EntitySpecialitySet
@@ -26,8 +27,9 @@ import app.qup.entity_management.data.remote.dto.general.EntityType
 import app.qup.entity_management.data.remote.dto.general.FacilitySet
 import app.qup.entity_management.data.remote.dto.general.InsuranceCompanySet
 import app.qup.entity_management.data.remote.dto.general.LandlineNumber
-import app.qup.entity_management.data.remote.dto.request.AddEntityRequestDto
+import app.qup.entity_management.data.remote.dto.request.EntityRequestDto
 import app.qup.ui.common.snack
+import app.qup.util.common.isValidEmail
 import com.codewithrish.entity_management.databinding.FragmentAddEntityBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
@@ -40,6 +42,8 @@ class AddEntityFragment : Fragment(), MenuProvider {
     private val navController: NavController? by lazy { view?.findNavController() }
 
     private val addEntityViewModel by viewModels<AddEntityViewModel>()
+
+    private val args by navArgs<AddEntityFragmentArgs>()
 
     // Adapters
     private lateinit var mobileNoAdapter: MobileNoAdapter
@@ -88,6 +92,14 @@ class AddEntityFragment : Fragment(), MenuProvider {
     private fun callFunctions() {
         stepNumberObserver()
 
+        args.entityId?.let { entityId ->
+            addEntityViewModel.getEntityById(entityId)
+        } ?: run {
+            getFormData()
+        }
+
+        entityDataObserver()
+
         // Step 1
         populateEntityTypes()
         populateYears()
@@ -116,6 +128,63 @@ class AddEntityFragment : Fragment(), MenuProvider {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
+    private fun getFormData() {
+        addEntityViewModel.getEntityTypes()
+        addEntityViewModel.getAccolades()
+        addEntityViewModel.getFacilities()
+        addEntityViewModel.getInsuranceCompanies()
+        addEntityViewModel.getEntityServices()
+        addEntityViewModel.getEntitySpecialities()
+    }
+
+    private fun entityDataObserver() {
+        addEntityViewModel.getEntity.observe(viewLifecycleOwner) {
+            it.entity?.let { entity ->
+                if (entity.mobileNumber.isNotEmpty()) selectedMobileNumbers.clear()
+                selectedMobileNumbers.addAll(entity.mobileNumber)
+                if (entity.entityId.isNotEmpty()) selectedEmailIds.clear()
+                selectedEmailIds.addAll(entity.email)
+                if (entity.landlineNumber.isNotEmpty()) selectedLandlineNumbers.clear()
+                selectedLandlineNumbers.addAll(entity.landlineNumber)
+                if (entity.insuranceCompanySet.isNotEmpty()) selectedInsuranceCompanies.clear()
+                selectedInsuranceCompanies.addAll(entity.insuranceCompanySet)
+                if (entity.facilitySet.isNotEmpty()) selectedFacilities.clear()
+                selectedFacilities.addAll(entity.facilitySet)
+                if (entity.entitySpecialitySet.isNotEmpty()) selectedSpecialities.clear()
+                selectedSpecialities.addAll(entity.entitySpecialitySet)
+                if (entity.entityServiceSet.isNotEmpty()) selectedServices.clear()
+                selectedServices.addAll(entity.entityServiceSet)
+                if (entity.entityAccoladeSet.isNotEmpty()) selectedAccolades.clear()
+                selectedAccolades.addAll(entity.entityAccoladeSet)
+                if (entity.entityAchievements.isNotEmpty()) selectedAchievements.clear()
+                selectedAchievements.addAll(entity.entityAchievements)
+
+                selectedEntityType = entity.entityType
+                selectedRegYear = entity.registrationYear
+                selectedRegMonth = entity.registrationMonth
+
+                // Step 1
+                binding.layoutStep1.etEntityName.setText(entity.name)
+                binding.layoutStep1.etRegistrationNumber.setText(entity.registrationNumber)
+                binding.layoutStep1.etWebsite.setText(entity.website)
+                binding.layoutStep1.sw24by7.isChecked = entity.open24By7
+                binding.layoutStep1.spYear.setSelection(getYearsTillDate().indexOf(entity.registrationYear.toString()), true)
+                binding.layoutStep1.spMonth.setSelection(entity.registrationMonth, true)
+
+                // Step 2
+                binding.layoutStep2.etAddressLine1.setText(entity.addressLine1)
+                binding.layoutStep2.etAddressLine2.setText(entity.addressLine2)
+                binding.layoutStep2.etPincode.setText(entity.pincode)
+                binding.layoutStep2.etCountry.setText(entity.country)
+                binding.layoutStep2.etState.setText(entity.state)
+                binding.layoutStep2.etCity.setText(entity.city)
+                binding.layoutStep2.etArea.setText(entity.area)
+                binding.layoutStep2.etLandmark.setText(entity.landmark)
+                getFormData()
+            }
+        }
+    }
+
     private fun addEntity() {
         // Step 1
         val entityName = binding.layoutStep1.etEntityName.text.toString()
@@ -125,44 +194,64 @@ class AddEntityFragment : Fragment(), MenuProvider {
         val addressLine1 = binding.layoutStep2.etAddressLine1.text.toString()
         val addressLine2 = binding.layoutStep2.etAddressLine2.text.toString()
         val pincode = binding.layoutStep2.etPincode.text.toString()
+        val country = binding.layoutStep2.etCountry.text.toString()
         val state = binding.layoutStep2.etState.text.toString()
         val city = binding.layoutStep2.etCity.text.toString()
         val area = binding.layoutStep2.etArea.text.toString()
         val landmark = binding.layoutStep2.etLandmark.text.toString()
 
-        addEntityViewModel.addEntity(
-            addEntityRequestDto = AddEntityRequestDto(
-                // Step 1
-                entityType = selectedEntityType,
-                name = entityName,
-                registrationNumber = registrationNumber,
-                registrationYear = selectedRegYear,
-                registrationMonth = selectedRegMonth,
-                open24By7 = binding.layoutStep1.sw24by7.isChecked,
-                website = website,
-                // Step 2
-                addressLine1 = addressLine1,
-                addressLine2 = addressLine2.ifEmpty { null },
-                pincode = pincode,
-                state = state,
-                city = city,
-                area = area,
-                landmark = landmark,
-                country = "India",
-                // Step 3
-                mobileNumber = selectedMobileNumbers.filter { it1 -> it1.toString().isNotEmpty() && it1.toString().length == 10 },
-                landlineNumber = selectedLandlineNumbers.filter { it1 -> !it1.stdCode.isNullOrEmpty() || it1.landlineNumber != null && it1.landlineNumber != 0L },
-                email = selectedEmailIds.filter { it1 -> it1.isNotEmpty() },
-                insuranceCompanySet = selectedInsuranceCompanies.filter { it1 -> it1.name != "Select Insurance" },
-                // Step 4
-                facilitySet = selectedFacilities.filter { it1 -> it1.name != "Select Facility" },
-                entitySpecialitySet = selectedSpecialities.filter { it1 -> it1.name != "Select Speciality" },
-                entityServiceSet = selectedServices.filter { it1 -> it1.name != "Select Service" },
-                entityAccoladeSet = selectedAccolades.filter { it1 -> it1.name != "Select Accolade" },
-                entityAchievements = selectedAchievements.filter { it1 -> it1.isNotEmpty() },
-            )
+        val entityRequestDto = EntityRequestDto(
+            // Step 1
+            entityType = selectedEntityType,
+            name = entityName,
+            registrationNumber = registrationNumber,
+            registrationYear = selectedRegYear,
+            registrationMonth = selectedRegMonth,
+            open24By7 = binding.layoutStep1.sw24by7.isChecked,
+            website = website,
+            // Step 2
+            addressLine1 = addressLine1,
+            addressLine2 = addressLine2.ifEmpty { null },
+            pincode = pincode,
+            state = state,
+            city = city,
+            area = area,
+            landmark = landmark,
+            country = country,
+            // Step 3
+            mobileNumber = selectedMobileNumbers.filter { it1 -> it1.toString().isNotEmpty() && it1.toString().length == 10 },
+            landlineNumber = selectedLandlineNumbers.filter { it1 -> !it1.stdCode.isNullOrEmpty() || it1.landlineNumber != null && it1.landlineNumber != 0L },
+            email = selectedEmailIds.filter { it1 -> it1.isValidEmail() },
+            insuranceCompanySet = selectedInsuranceCompanies.filter { it1 -> it1.name != "Select Insurance" },
+            // Step 4
+            facilitySet = selectedFacilities.filter { it1 -> it1.name != "Select Facility" },
+            entitySpecialitySet = selectedSpecialities.filter { it1 -> it1.name != "Select Speciality" },
+            entityServiceSet = selectedServices.filter { it1 -> it1.name != "Select Service" },
+            entityAccoladeSet = selectedAccolades.filter { it1 -> it1.name != "Select Accolade" },
+            entityAchievements = selectedAchievements.filter { it1 -> it1.isNotEmpty() },
         )
+
+        args.entityId?.let {
+            addEntityViewModel.updateEntityById(
+                id = args.entityId!!,
+                entityRequestDto = entityRequestDto
+            )
+        } ?: run {
+            addEntityViewModel.addEntity(
+                entityRequestDto = entityRequestDto
+            )
+        }
         addEntityViewModel.addEntity.observe(viewLifecycleOwner) {
+            it.entity?.let {
+                navController?.popBackStack()
+            }
+            it.error?.let { error ->
+                if (error.isNotEmpty()) {
+                    binding.root.snack(error)
+                }
+            }
+        }
+        addEntityViewModel.updateEntity.observe(viewLifecycleOwner) {
             it.entity?.let {
                 navController?.popBackStack()
             }
@@ -209,6 +298,9 @@ class AddEntityFragment : Fragment(), MenuProvider {
                         selectedEntityType = entityTypesAdapter.getItem(position) as EntityType
                     }
                     override fun onNothingSelected(parent: AdapterView<*>?) {}
+                }
+                if (selectedEntityType != null) {
+                    binding.layoutStep1.spEntityType.setSelection(finalEntityTypes.indexOf(selectedEntityType), true)
                 }
             }
         }
@@ -497,7 +589,7 @@ class AddEntityFragment : Fragment(), MenuProvider {
             if (currentValue == 2 && isForm2Valid()) {
                 addEntityViewModel.stepNumber.postValue(3)
             }
-            if (currentValue == 3) {
+            if (currentValue == 3 && isForm3Valid()) {
                 addEntityViewModel.stepNumber.postValue(4)
             }
             if (currentValue == 4) {
@@ -515,7 +607,7 @@ class AddEntityFragment : Fragment(), MenuProvider {
         addEntityViewModel.stepNumber.observe(viewLifecycleOwner) {
             binding.btnPrev.isVisible = it != 1
             binding.btnNext.isVisible = it in 1..4
-            binding.btnNext.text = if (it in 1..3) "Next" else if (it == 4) "Submit" else "Invalid State"
+            binding.btnNext.text = if (it in 1..3) "Next" else if (it == 4) { if (args.entityId == null) "Submit" else "Update" } else "Invalid State"
 
             binding.layoutStep1.root.isVisible = it == 1
             binding.layoutStep2.root.isVisible = it == 2
@@ -529,18 +621,10 @@ class AddEntityFragment : Fragment(), MenuProvider {
             binding.root.snack("Select Entity Type")
             return false
         }
-        if (binding.layoutStep1.etRegistrationNumber.text.toString().isEmpty()) {
-            binding.root.snack("Enter Registration Number")
-            binding.layoutStep1.etRegistrationNumber.error = "Required"
-            binding.layoutStep1.etRegistrationNumber.requestFocus()
-            return false
-        }
-        if (binding.layoutStep1.spYear.selectedItemPosition == 0) {
-            binding.root.snack("Select Year")
-            return false
-        }
-        if (binding.layoutStep1.spMonth.selectedItemPosition == 0) {
-            binding.root.snack("Select Month")
+        if (binding.layoutStep1.etEntityName.text.toString().isEmpty()) {
+            binding.root.snack("Enter Entity Name")
+            binding.layoutStep1.etEntityName.error = "Required"
+            binding.layoutStep1.etEntityName.requestFocus()
             return false
         }
         return true
@@ -581,6 +665,16 @@ class AddEntityFragment : Fragment(), MenuProvider {
             binding.root.snack("Enter Landmark")
             binding.layoutStep2.etLandmark.error = "Required"
             binding.layoutStep2.etLandmark.requestFocus()
+            return false
+        }
+        return true
+    }
+
+    private fun isForm3Valid(): Boolean {
+        val validMobileNos = selectedMobileNumbers.filter { it1 -> it1.toString().isNotEmpty() && it1.toString().length == 10 }
+        val validLandLineNos = selectedLandlineNumbers.filter { it1 -> !it1.stdCode.isNullOrEmpty() || it1.landlineNumber != null && it1.landlineNumber != 0L }
+        if (validMobileNos.isEmpty() && validLandLineNos.isEmpty()) {
+            binding.root.snack("Enter One Mob No or Landline Number")
             return false
         }
         return true

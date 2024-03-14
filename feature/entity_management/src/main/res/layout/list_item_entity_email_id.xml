@@ -5,16 +5,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingBottom="8dp">
 
-    <EditText
-        android:id="@+id/et_email_id"
-        android:layout_width="0dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_email_id"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Email Id"
-        android:paddingBottom="8dp"
-        android:inputType="textEmailAddress"
-        android:background="@drawable/shape_rectangle_border"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_email_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Email Id"
+            android:padding="12dp"
+            android:inputType="textEmailAddress" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,6 +10,7 @@ import app.qup.entity_management.data.remote.dto.general.GeoLocation
 import app.qup.entity_management.data.remote.dto.general.InsuranceCompanySet
 import app.qup.entity_management.data.remote.dto.general.LandlineNumber
 import app.qup.entity_management.data.remote.dto.general.Link
+import app.qup.entity_management.data.remote.dto.request.EntityRequestDto
 import app.qup.entity_management.domain.model.Entity
 
 data class EntityResponseDto(
@@ -86,5 +87,39 @@ fun EntityResponseDto.toEntity(): Entity {
         state = state ?: "",
         virtualReceptionIds = virtualReceptionIds ?: mutableListOf(),
         website = website ?: ""
+    )
+}
+
+fun EntityResponseDto.toEntityRequestDto(): EntityRequestDto {
+    return EntityRequestDto(
+        // Step 1
+        entityType = entityType,
+        name = name,
+        registrationNumber = registrationNumber,
+        registrationYear = registrationYear,
+        registrationMonth = registrationMonth,
+        open24By7 = open24By7,
+        website = website,
+        // Step 2
+        addressLine1 = addressLine1,
+        addressLine2 = addressLine2,
+        pincode = pincode,
+        state = state,
+        city = city,
+        area = area,
+        landmark = landmark,
+        country = country,
+        // Step 3
+        mobileNumber = mobileNumber,
+        landlineNumber = landlineNumber,
+        email = email,
+        insuranceCompanySet = insuranceCompanySet,
+        entityAdminInfo = entityAdminInfo,
+        // Step 4
+        facilitySet = facilitySet,
+        entitySpecialitySet = entitySpecialitySet,
+        entityServiceSet = entityServiceSet,
+        entityAccoladeSet = entityAccoladeSet,
+        entityAchievements = entityAchievements
     )
 }

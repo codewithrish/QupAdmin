@@ -61,6 +61,7 @@ class SpecialityAdapter @Inject constructor(
                 }
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
+            binding.spSelectSpeciality.setSelection(specialities.indexOf(item))
         }
     }
     class SpecialityDiffUtil: DiffUtil.ItemCallback<EntitySpecialitySet>() {

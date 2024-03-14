@@ -7,7 +7,7 @@ import app.qup.entity_management.data.paging.GetAllEntitiesPagingData
 import app.qup.entity_management.data.paging.SearchEntitiesPagingData
 import app.qup.entity_management.data.remote.api.EntityApi
 import app.qup.entity_management.data.remote.dto.general.EntityResource
-import app.qup.entity_management.data.remote.dto.request.AddEntityRequestDto
+import app.qup.entity_management.data.remote.dto.request.EntityRequestDto
 import app.qup.entity_management.data.remote.dto.response.EntityAccoladeResponseDto
 import app.qup.entity_management.data.remote.dto.response.EntityResponseDto
 import app.qup.entity_management.data.remote.dto.response.EntityTypeResponseDto
@@ -47,8 +47,19 @@ class EntityRepositoryImpl @Inject constructor(
         }
     ).flow
 
-    override suspend fun addEntity(addEntityRequestDto: AddEntityRequestDto): Response<EntityResponseDto> {
-        return entityApi.addEntity(addEntityRequestDto)
+    override suspend fun addEntity(entityRequestDto: EntityRequestDto): Response<EntityResponseDto> {
+        return entityApi.addEntity(entityRequestDto)
+    }
+
+    override suspend fun getEntityById(id: String): Response<EntityResponseDto> {
+        return entityApi.getEntityById(id)
+    }
+
+    override suspend fun updateEntityById(
+        id: String,
+        entityRequestDto: EntityRequestDto
+    ): Response<EntityResponseDto> {
+        return entityApi.updateEntityById(id, entityRequestDto)
     }
 
     override suspend fun getEntityTypes(): Response<List<EntityTypeResponseDto>> {

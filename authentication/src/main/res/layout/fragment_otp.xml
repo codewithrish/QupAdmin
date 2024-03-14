@@ -82,6 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
+        android:padding="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -94,6 +95,7 @@
             android:autofillHints="phone"
             android:hint="@string/enter_otp"
             android:inputType="number"
+            android:padding="12dp"
             android:maxLength="6" />
     </com.google.android.material.textfield.TextInputLayout>
 

@@ -63,7 +63,9 @@ class AccoladeAdapter @Inject constructor(
                 }
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
+            binding.spSelectAccolades.setSelection(accolades.map { it1 -> it1.entityAccoladeId }.indexOf(item.entityAccoladeId))
 
+            binding.etDescription.setText(item.note)
             binding.etDescription.addTextChangedListener {
                 onAccoladeDescType?.invoke(it.toString(), bindingAdapterPosition)
             }

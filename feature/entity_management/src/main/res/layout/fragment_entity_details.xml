@@ -1,0 +1,231 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    tools:context="app.qup.entity_management.presentation.search_entity.entity_details.EntityDetailsFragment">
+
+    <TextView
+        android:id="@+id/lbl_entity_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Entity Information"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="?attr/colorOnSurface"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_entity_info" />
+
+    <TextView
+        android:id="@+id/lbl_entity_details"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="?attr/colorSurfaceVariant"
+        android:padding="4dp"
+        android:text="Entity Details"
+        android:textColor="?attr/colorPrimary"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
+
+    <TextView
+        android:id="@+id/lbl_entity_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Name:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_entity_details" />
+
+    <TextView
+        android:id="@+id/tv_entity_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Rishabh Hospital"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/lbl_entity_name"
+        app:layout_constraintTop_toTopOf="@+id/lbl_entity_name" />
+
+    <TextView
+        android:id="@+id/lbl_entity_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Type:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_entity_name" />
+
+    <TextView
+        android:id="@+id/tv_entity_type"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Hospital"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/lbl_entity_type"
+        app:layout_constraintTop_toTopOf="@+id/lbl_entity_type" />
+
+    <TextView
+        android:id="@+id/lbl_entity_website"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Type:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_entity_type" />
+
+    <TextView
+        android:id="@+id/tv_entity_website"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="www.google.com"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/lbl_entity_website"
+        app:layout_constraintTop_toTopOf="@+id/lbl_entity_website" />
+
+    <TextView
+        android:id="@+id/lbl_entity_address_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="?attr/colorSurfaceVariant"
+        android:padding="4dp"
+        android:text="Address &amp; Contact Information"
+        android:textStyle="bold|italic"
+        android:textColor="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_entity_website" />
+
+    <TextView
+        android:id="@+id/lbl_entity_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Address:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_entity_address_info" />
+
+    <TextView
+        android:id="@+id/tv_entity_address"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Address Details"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/lbl_entity_address"
+        app:layout_constraintTop_toTopOf="@+id/lbl_entity_address" />
+
+    <TextView
+        android:id="@+id/lbl_entity_landline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Landline:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_entity_address" />
+
+    <TextView
+        android:id="@+id/tv_entity_landline"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="0164-2214325"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/lbl_entity_landline"
+        app:layout_constraintTop_toTopOf="@+id/lbl_entity_landline" />
+
+    <TextView
+        android:id="@+id/lbl_entity_mobile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Mobile:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_entity_landline" />
+
+    <TextView
+        android:id="@+id/tv_entity_mobile"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="65321-52467"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/lbl_entity_mobile"
+        app:layout_constraintTop_toTopOf="@+id/lbl_entity_mobile" />
+
+    <TextView
+        android:id="@+id/lbl_entity_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Email:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_entity_mobile" />
+
+    <TextView
+        android:id="@+id/tv_entity_email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="admin@admin.com"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/lbl_entity_email"
+        app:layout_constraintTop_toTopOf="@+id/lbl_entity_email" />
+
+    <TextView
+        android:id="@+id/lbl_entity_id_section"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="?attr/colorSurfaceVariant"
+        android:padding="4dp"
+        android:text="Entity ID (Tap Id To Copy)"
+        android:textStyle="bold|italic"
+        android:textColor="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_entity_email" />
+
+    <TextView
+        android:id="@+id/lbl_entity_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Entity Id:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_entity_id_section" />
+
+    <TextView
+        android:id="@+id/tv_entity_id"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="fe785t8qwe8756g8ew87"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/lbl_entity_id"
+        app:layout_constraintTop_toTopOf="@+id/lbl_entity_id" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

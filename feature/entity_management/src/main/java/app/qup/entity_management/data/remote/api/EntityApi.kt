@@ -1,6 +1,6 @@
 package app.qup.entity_management.data.remote.api
 
-import app.qup.entity_management.data.remote.dto.request.AddEntityRequestDto
+import app.qup.entity_management.data.remote.dto.request.EntityRequestDto
 import app.qup.entity_management.data.remote.dto.response.AllEntitiesResponseDto
 import app.qup.entity_management.data.remote.dto.response.EntityAccoladeResponseDto
 import app.qup.entity_management.data.remote.dto.response.EntityResponseDto
@@ -13,6 +13,8 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface EntityApi {
@@ -21,7 +23,11 @@ interface EntityApi {
     @POST("provider-service/entity/by-name")
     suspend fun searchEntity(@Body entityNames: List<String>, @Query("page") page: Int, @Query("size") size: Int): Response<AllEntitiesResponseDto>
     @POST("provider-service/entity/")
-    suspend fun addEntity(@Body addEntityRequestDto: AddEntityRequestDto): Response<EntityResponseDto>
+    suspend fun addEntity(@Body entityRequestDto: EntityRequestDto): Response<EntityResponseDto>
+    @GET("provider-service/entity/{id}")
+    suspend fun getEntityById(@Path("id") id: String): Response<EntityResponseDto>
+    @PUT("provider-service/entity/{id}")
+    suspend fun updateEntityById(@Path("id") id: String, @Body entityRequestDto: EntityRequestDto): Response<EntityResponseDto>
     @GET("master-service/master/entity/types")
     suspend fun getEntityTypes(): Response<List<EntityTypeResponseDto>>
     @GET("master-service/master/entity/insurance-comapnies")

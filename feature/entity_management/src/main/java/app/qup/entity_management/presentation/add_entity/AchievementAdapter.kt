@@ -25,6 +25,7 @@ class AchievementAdapter @Inject constructor() : ListAdapter<String, Achievement
 
     inner class AchievementViewHolder(private val binding: ListItemEntityAchievementBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: String) {
+            binding.etAchievement.setText(item)
             binding.etAchievement.addTextChangedListener {
                 val input = it.toString()
                 onAchievementTyping?.invoke(input, bindingAdapterPosition)

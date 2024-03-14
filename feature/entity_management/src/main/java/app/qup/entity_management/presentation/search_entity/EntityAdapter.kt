@@ -12,6 +12,9 @@ import app.qup.entity_management.domain.model.EntityR
 
 class EntityAdapter : PagingDataAdapter<EntityR, EntityAdapter.DoctorViewHolder>(DoctorDiffUtil()) {
 
+    var onViewEntityClick: ((String) -> Unit)? = null
+    var onEditEntityClick: ((String) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DoctorViewHolder {
         val binding = ListItemEntityBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return DoctorViewHolder(binding)
@@ -49,6 +52,13 @@ class EntityAdapter : PagingDataAdapter<EntityR, EntityAdapter.DoctorViewHolder>
                 adminInfoBuilder.append(" ")
                 adminInfoBuilder.append(entity.entityAdminInfo.mobileNumber)
                 binding.tvEntityAdmin.text = adminInfoBuilder.toString()
+
+                binding.btnViewEntity.setOnClickListener {
+                    onViewEntityClick?.invoke(entity.entityId)
+                }
+                binding.btnEditEntity.setOnClickListener {
+                    onEditEntityClick?.invoke(entity.entityId)
+                }
             }
         }
     }

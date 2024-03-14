@@ -63,7 +63,9 @@ class FacilityAdapter @Inject constructor(
                 }
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
+            binding.spSelectFacility.setSelection(facilities.map { it1 -> it1.facilityId }.indexOf(item.facilityId))
 
+            binding.etDescription.setText(item.description)
             binding.etDescription.addTextChangedListener {
                 onFacilityDescType?.invoke(it.toString(), bindingAdapterPosition)
             }

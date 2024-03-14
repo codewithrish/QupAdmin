@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardUseCompatPadding="true"
-    app:cardCornerRadius="4dp">
+    app:cardCornerRadius="4dp"
+    app:cardUseCompatPadding="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -28,31 +28,49 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            tools:text="Kharadi, Pune"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_entity_name_type" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_entity_name_type"
+            tools:text="Kharadi, Pune" />
 
         <TextView
             android:id="@+id/tv_entity_contact"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            tools:text="Landline : 011-2212421, Mobile : 98432-42572"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_entity_address" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_entity_address"
+            tools:text="Landline : 011-2212421, Mobile : 98432-42572" />
 
         <TextView
             android:id="@+id/tv_entity_admin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            tools:text="Admin: Rahul Sawant"
             android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_entity_contact" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_entity_contact"
+            tools:text="Admin: Rahul Sawant" />
+
+        <ImageView
+            android:id="@+id/btn_view_entity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_entity_admin"
+            app:srcCompat="@drawable/ic_view_details" />
+
+        <ImageView
+            android:id="@+id/btn_edit_entity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/btn_view_entity"
+            app:layout_constraintTop_toTopOf="@+id/btn_view_entity"
+            app:srcCompat="@drawable/ic_edit" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

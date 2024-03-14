@@ -2,11 +2,15 @@ package app.qup.util.common
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.util.Patterns
 import android.widget.EditText
+import android.widget.Toast
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import java.util.regex.Pattern
+
 
 fun millisToDateString(date: Long?, format: String = LOCAL_DATE_FORMAT): String {
     if (date == null || date == 0L) {
@@ -48,4 +52,13 @@ fun EditText.transformIntoDatePicker(context: Context, format: String = LOCAL_DA
             show()
         }
     }
+}
+
+fun Context.makeToast(msg: String) {
+    Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+}
+
+fun String.isValidEmail(): Boolean {
+    val pattern: Pattern = Patterns.EMAIL_ADDRESS
+    return pattern.matcher(this).matches()
 }

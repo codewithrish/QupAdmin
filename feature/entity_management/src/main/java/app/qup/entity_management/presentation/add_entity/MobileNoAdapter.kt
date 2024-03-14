@@ -25,9 +25,13 @@ class MobileNoAdapter @Inject constructor() : ListAdapter<Long, MobileNoAdapter.
 
     inner class MobileNoViewHolder(private val binding: ListItemEntityMobileBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Long) {
+            binding.etMobileNumber.setText(item.toString())
             binding.etMobileNumber.addTextChangedListener {
-                val input = it.toString().toLong()
-                onMobileTyping?.invoke(input, bindingAdapterPosition)
+                val input = it.toString()
+                if (input.isNotEmpty()) {
+                    binding.tilMobileNumber.error = if (input.length != 10) "Enter Valid Number" else null
+                    onMobileTyping?.invoke(input.toLong(), bindingAdapterPosition)
+                }
             }
         }
     }

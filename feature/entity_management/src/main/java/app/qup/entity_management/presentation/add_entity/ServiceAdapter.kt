@@ -1,5 +1,6 @@
 package app.qup.entity_management.presentation.add_entity
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -63,7 +64,9 @@ class ServiceAdapter @Inject constructor(
                 }
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
+            binding.spSelectService.setSelection(services.map { it1 -> it1.entityServiceId }.indexOf(item.entityServiceId))
 
+            binding.etDescription.setText(item.description)
             binding.etDescription.addTextChangedListener {
                 onServiceDescType?.invoke(it.toString(), bindingAdapterPosition)
             }

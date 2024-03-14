@@ -27,6 +27,8 @@ class LandlineAdapter @Inject constructor() : ListAdapter<LandlineNumber, Landli
 
     inner class LandlineViewHolder(private val binding: ListItemEntityLandlineBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: LandlineNumber) {
+            binding.etStdCode.setText(item.stdCode)
+            binding.etNumber.setText(item.landlineNumber.toString())
             binding.etStdCode.addTextChangedListener {
                 val input = it.toString()
                 onStdCodeTyping?.invoke(input, bindingAdapterPosition)

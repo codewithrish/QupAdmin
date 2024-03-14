@@ -64,6 +64,14 @@ class SearchEntityFragment : Fragment(), MenuProvider {
             header = LoaderAdapter(),
             footer = LoaderAdapter()
         )
+        entityAdapter.onViewEntityClick = { entityId ->
+            val action = SearchEntityFragmentDirections.actionSearchEntityFragmentToEntityDetailsFragment(entityId)
+            navController?.safeNavigate(action)
+        }
+        entityAdapter.onEditEntityClick = { entityId ->
+            val action = SearchEntityFragmentDirections.actionSearchEntityFragmentToAddEntityFragment(entityId)
+            navController?.safeNavigate(action)
+        }
     }
 
     private fun searchEntities() {

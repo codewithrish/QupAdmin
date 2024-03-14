@@ -5,17 +5,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingBottom="8dp">
 
-    <EditText
-        android:id="@+id/et_mobile_number"
-        android:layout_width="0dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_mobile_number"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Mobile No."
-        android:paddingBottom="8dp"
-        android:inputType="number"
-        android:maxLength="10"
-        android:background="@drawable/shape_rectangle_border"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_mobile_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Mobile No."
+            android:padding="12dp"
+            android:inputType="number"
+            android:maxLength="10"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

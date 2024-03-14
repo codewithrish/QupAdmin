@@ -9,7 +9,7 @@ import app.qup.entity_management.data.remote.dto.general.FacilitySet
 import app.qup.entity_management.data.remote.dto.general.InsuranceCompanySet
 import app.qup.entity_management.data.remote.dto.general.LandlineNumber
 
-data class AddEntityRequestDto(
+data class EntityRequestDto(
     // Step 1
     val entityType: EntityType? = null,
     val name: String? = null,

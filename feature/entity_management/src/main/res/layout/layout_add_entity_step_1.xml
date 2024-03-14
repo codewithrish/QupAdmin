@@ -37,7 +37,6 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_entity_name"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -49,12 +48,13 @@
             android:id="@+id/et_entity_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:inputType="textCapWords"
             android:hint="Entity Name*" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_registration_number"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -66,7 +66,8 @@
             android:id="@+id/et_registration_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Registration Number*" />
+            android:padding="12dp"
+            android:hint="Registration Number" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -93,7 +94,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Year*"
+        android:text="Year"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lbl_reg_date_time" />
@@ -124,7 +125,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Month*"
+        android:text="Month"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/lbl_reg_date_time" />
@@ -168,7 +169,6 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_website"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -179,6 +179,7 @@
             android:id="@+id/et_website"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="12dp"
             android:hint="Website" />
     </com.google.android.material.textfield.TextInputLayout>
 

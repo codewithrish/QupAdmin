@@ -13,10 +13,28 @@
         <action
             android:id="@+id/action_searchEntityFragment_to_addEntityFragment"
             app:destination="@id/addEntityFragment" />
+        <action
+            android:id="@+id/action_searchEntityFragment_to_entityDetailsFragment"
+            app:destination="@id/entityDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/addEntityFragment"
         android:name="app.qup.entity_management.presentation.add_entity.AddEntityFragment"
         android:label="Add, Update Entity"
-        tools:layout="@layout/fragment_add_entity" />
+        tools:layout="@layout/fragment_add_entity" >
+        <argument
+            android:name="entityId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+    <dialog
+        android:id="@+id/entityDetailsFragment"
+        android:name="app.qup.entity_management.presentation.search_entity.entity_details.EntityDetailsFragment"
+        android:label="fragment_entity_details"
+        tools:layout="@layout/fragment_entity_details" >
+        <argument
+            android:name="entityId"
+            app:argType="string" />
+    </dialog>
 </navigation>
