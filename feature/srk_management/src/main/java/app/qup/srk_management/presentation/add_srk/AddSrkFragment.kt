@@ -172,11 +172,15 @@ class AddSrkFragment : Fragment(), MenuProvider {
             it.srk?.let {
                 navController?.popBackStack()
             }
+            binding.progressBar.isVisible = it.isLoading
+            binding.btnSubmit.isEnabled = !it.isLoading
         }
         addSrkViewModel.updateUser.observe(viewLifecycleOwner) {
             it.srk?.let {
                 navController?.popBackStack()
             }
+            binding.progressBar.isVisible = it.isLoading
+            binding.btnSubmit.isEnabled = !it.isLoading
         }
     }
 

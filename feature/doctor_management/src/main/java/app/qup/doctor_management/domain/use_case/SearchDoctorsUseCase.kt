@@ -1,6 +1,5 @@
 package app.qup.doctor_management.domain.use_case
 
-import android.util.Log
 import androidx.paging.PagingData
 import androidx.paging.map
 import app.qup.doctor_management.data.remote.dto.general.toDoctor
@@ -16,7 +15,6 @@ class SearchDoctorsUseCase @Inject constructor(
     suspend operator fun invoke(doctorName: String, size: Int) : Flow<PagingData<DoctorR>>
     = doctorRepository.searchDoctorByName(doctorName, size).map { pagingData ->
         pagingData.map { it1 ->
-            Log.d("TAG", "invoke: ${it1.toDoctor()}")
             it1.toDoctor()
         }
     }

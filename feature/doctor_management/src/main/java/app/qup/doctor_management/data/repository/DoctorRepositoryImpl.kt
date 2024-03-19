@@ -7,6 +7,7 @@ import app.qup.doctor_management.data.paging.GetAllDoctorsPagingData
 import app.qup.doctor_management.data.paging.SearchDoctorsByNamePagingData
 import app.qup.doctor_management.data.remote.api.DoctorApi
 import app.qup.doctor_management.data.remote.dto.general.DoctorSearchResource
+import app.qup.doctor_management.data.remote.dto.general.UserResource
 import app.qup.doctor_management.data.remote.dto.request.DoctorRequestDto
 import app.qup.doctor_management.data.remote.dto.response.AccoladeResponseDto
 import app.qup.doctor_management.data.remote.dto.response.DegreeResponseDto
@@ -71,5 +72,20 @@ class DoctorRepositoryImpl @Inject constructor(
 
     override suspend fun getActiveAccolades(): Response<List<AccoladeResponseDto>> {
         return doctorApi.getActiveAccolades()
+    }
+
+    override suspend fun getUserInfo(mobileNumber: String): Response<UserResource> {
+        return doctorApi.getUserInfo(mobileNumber)
+    }
+
+    override suspend fun getDoctorById(id: String): Response<DoctorResponseDto> {
+        return doctorApi.getDoctorById(id)
+    }
+
+    override suspend fun updateDoctorById(
+        id: String,
+        doctorRequestDto: DoctorRequestDto
+    ): Response<DoctorResponseDto> {
+        return doctorApi.updateDoctorById(id, doctorRequestDto)
     }
 }

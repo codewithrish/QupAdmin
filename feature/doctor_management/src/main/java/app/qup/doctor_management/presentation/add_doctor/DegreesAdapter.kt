@@ -57,6 +57,7 @@ class DegreesAdapter @Inject constructor(
                     }
                 }
             binding.spSelectDegree.setAdapter(degreesAdapter)
+            binding.spSelectDegree.setSelection(allDegrees.map { it1 -> it1.educationDegreeId }.indexOf(item.educationDegreeId))
 
             binding.spSelectDegree.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -65,6 +66,7 @@ class DegreesAdapter @Inject constructor(
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
 
+            binding.etAddLocation.setText(item.location)
             binding.etAddLocation.addTextChangedListener {
                 val input = it.toString()
                 onLocationType?.invoke(input, bindingAdapterPosition)

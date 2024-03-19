@@ -13,12 +13,18 @@ import app.qup.doctor_management.domain.use_case.GetActiveAccoladesUseCase
 import app.qup.doctor_management.domain.use_case.GetActiveDegreeMasterUseCase
 import app.qup.doctor_management.domain.use_case.GetActiveSpecialityCategoryMasterUseCase
 import app.qup.doctor_management.domain.use_case.GetActiveSpecialityMasterUseCase
+import app.qup.doctor_management.domain.use_case.GetDoctorByIdState
+import app.qup.doctor_management.domain.use_case.GetDoctorByIdUseCase
 import app.qup.doctor_management.domain.use_case.GetGendersState
 import app.qup.doctor_management.domain.use_case.GetGendersUseCase
+import app.qup.doctor_management.domain.use_case.GetUserByNumberState
+import app.qup.doctor_management.domain.use_case.GetUserByNumberUseCase
 import app.qup.doctor_management.domain.use_case.SearchDoctorByNumberState
 import app.qup.doctor_management.domain.use_case.SearchDoctorByNumberUseCase
 import app.qup.doctor_management.domain.use_case.SpecialityCategoryState
 import app.qup.doctor_management.domain.use_case.SpecialityState
+import app.qup.doctor_management.domain.use_case.UpdateDoctorState
+import app.qup.doctor_management.domain.use_case.UpdateDoctorUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -27,12 +33,15 @@ import javax.inject.Inject
 @HiltViewModel
 class AddDoctorViewModel @Inject constructor(
     private val addDoctorUseCase: AddDoctorUseCase,
+    private val updateDoctorUseCase: UpdateDoctorUseCase,
     private val getGendersUseCase: GetGendersUseCase,
     private val getActiveAccoladesUseCase: GetActiveAccoladesUseCase,
     private val getActiveDegreeMasterUseCase: GetActiveDegreeMasterUseCase,
     private val getActiveSpecialityCategoryMasterUseCase: GetActiveSpecialityCategoryMasterUseCase,
     private val getActiveSpecialityMasterUseCase: GetActiveSpecialityMasterUseCase,
     private val searchDoctorByNumberUseCase: SearchDoctorByNumberUseCase,
+    private val getDoctorByIdUseCase: GetDoctorByIdUseCase,
+    private val getUserByNumberUseCase: GetUserByNumberUseCase,
 ) : ViewModel() {
 
     val stepNumber: MutableLiveData<Int> = MutableLiveData(1)
@@ -40,6 +49,18 @@ class AddDoctorViewModel @Inject constructor(
     private val _addDoctor: MutableLiveData<AddDoctorState> = MutableLiveData()
     val addDoctor: LiveData<AddDoctorState>
         get() = _addDoctor
+
+    private val _updateDoctor: MutableLiveData<UpdateDoctorState> = MutableLiveData()
+    val updateDoctor: LiveData<UpdateDoctorState>
+        get() = _updateDoctor
+
+    private val _getDoctorById: MutableLiveData<GetDoctorByIdState> = MutableLiveData()
+    val getDoctorById: LiveData<GetDoctorByIdState>
+        get() = _getDoctorById
+
+    private val _userInfo: MutableLiveData<GetUserByNumberState> = MutableLiveData()
+    val userInfo: LiveData<GetUserByNumberState>
+        get() = _userInfo
 
     private val _genders: MutableLiveData<GetGendersState> = MutableLiveData()
     val genders: LiveData<GetGendersState>
@@ -64,11 +85,8 @@ class AddDoctorViewModel @Inject constructor(
     val searchDoctorByName: LiveData<SearchDoctorByNumberState>
         get() = _searchDoctorByName
 
-
     init {
         getGenders()
-        getAccolades()
-        getDegrees()
     }
 
     fun addDoctor(
@@ -79,19 +97,44 @@ class AddDoctorViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
+    fun updateDoctor(
+        id: String,
+        doctorRequestDto: DoctorRequestDto
+    ) {
+        updateDoctorUseCase(id, doctorRequestDto).onEach {
+            _updateDoctor.postValue(it)
+        }.launchIn(viewModelScope)
+    }
+
+    fun getDoctorById(
+        id: String
+    ) {
+        getDoctorByIdUseCase(id).onEach {
+            _getDoctorById.postValue(it)
+        }.launchIn(viewModelScope)
+    }
+
+    fun getUserByNumber(
+        mobileNumber: String
+    ) {
+        getUserByNumberUseCase(mobileNumber).onEach {
+            _userInfo.postValue(it)
+        }.launchIn(viewModelScope)
+    }
+
     private fun getGenders() {
         getGendersUseCase().onEach {
             _genders.postValue(it)
         }.launchIn(viewModelScope)
     }
 
-    private fun getAccolades() {
+    fun getAccolades() {
         getActiveAccoladesUseCase().onEach {
             _accolades.postValue(it)
         }.launchIn(viewModelScope)
     }
 
-    private fun getDegrees() {
+    fun getDegrees() {
         getActiveDegreeMasterUseCase().onEach {
             _degrees.postValue(it)
         }.launchIn(viewModelScope)

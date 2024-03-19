@@ -17,6 +17,17 @@
     <fragment
         android:id="@+id/addDoctorFragment"
         android:name="app.qup.doctor_management.presentation.add_doctor.AddDoctorFragment"
-        android:label="Add Doctor"
-        tools:layout="@layout/fragment_add_doctor" />
+        android:label="Add, Update Doctor"
+        tools:layout="@layout/fragment_add_doctor" >
+        <argument
+            android:name="mobileNumber"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="doctorId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
 </navigation>

@@ -1,6 +1,7 @@
 package app.qup.doctor_management.data.remote.api
 
 import app.qup.doctor_management.data.remote.dto.general.DoctorSearchResource
+import app.qup.doctor_management.data.remote.dto.general.UserResource
 import app.qup.doctor_management.data.remote.dto.response.SpecialityCategoryResponseDto
 import app.qup.doctor_management.data.remote.dto.request.DoctorRequestDto
 import app.qup.doctor_management.data.remote.dto.response.AccoladeResponseDto
@@ -12,6 +13,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -34,4 +36,11 @@ interface DoctorApi {
     suspend fun getActiveSpecialityCategoryMaster(): Response<List<SpecialityCategoryResponseDto>>
     @GET("/master-service/master/doctor/accolades/active")
     suspend fun getActiveAccolades(): Response<List<AccoladeResponseDto>>
+    @GET("userauth/users/{mobileNumber}")
+    suspend fun getUserInfo(@Path("mobileNumber") mobileNumber: String): Response<UserResource>
+    @GET("provider-service/doctor/by-id/{id}")
+    suspend fun getDoctorById(@Path("id") id: String): Response<DoctorResponseDto>
+    @PUT("provider-service/doctor/{id}")
+    suspend fun updateDoctorById(@Path("id") id: String, @Body doctorRequestDto: DoctorRequestDto): Response<DoctorResponseDto>
+
 }

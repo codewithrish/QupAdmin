@@ -12,6 +12,8 @@ import app.qup.util.common.millisToDateString
 
 class DoctorAdapter : PagingDataAdapter<DoctorR, DoctorAdapter.DoctorViewHolder>(DoctorDiffUtil()) {
 
+    var onItemClick: ((DoctorR) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DoctorViewHolder {
         val binding = ListItemDoctorBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return DoctorViewHolder(binding)
@@ -34,6 +36,10 @@ class DoctorAdapter : PagingDataAdapter<DoctorR, DoctorAdapter.DoctorViewHolder>
                 }
                 binding.tvRegNo.text = doctor.registrationNumber
                 binding.tvProfileDates.text = "Creation : ${millisToDateString(doctor.createdAt)}, Modification : ${millisToDateString(doctor.lastModified)}"
+
+                itemView.setOnClickListener {
+                    onItemClick?.invoke(item)
+                }
             }
         }
     }

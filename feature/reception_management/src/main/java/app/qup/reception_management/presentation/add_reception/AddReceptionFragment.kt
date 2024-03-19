@@ -172,11 +172,15 @@ class AddReceptionFragment : Fragment(), MenuProvider {
             it.reception?.let {
                 navController?.popBackStack()
             }
+            binding.progressBar.isVisible = it.isLoading
+            binding.btnSubmit.isEnabled = !it.isLoading
         }
         addReceptionViewModel.updateUser.observe(viewLifecycleOwner) {
             it.reception?.let {
                 navController?.popBackStack()
             }
+            binding.progressBar.isVisible = it.isLoading
+            binding.btnSubmit.isEnabled = !it.isLoading
         }
     }
 

@@ -11,12 +11,14 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import app.qup.doctor_management.data.remote.dto.general.SpecialitySet
 import app.qup.doctor_management.databinding.ListItemSpecialityBinding
+import app.qup.doctor_management.domain.model.Speciality
 import app.qup.doctor_management.domain.model.SpecialityCategory
 import javax.inject.Inject
 
 class SpecialityAdapter @Inject constructor(
     private val allCategories: List<SpecialityCategory>,
-    private val allSpecialities: List<SpecialitySet>
+    private val allSpecialities: List<SpecialitySet>,
+    private val specialities: List<Speciality>
 ): ListAdapter<SpecialitySet, SpecialityAdapter.SpecialityViewHolder>(SpecialityDiffUtil()) {
 
     var selectedSpeciality: ((SpecialitySet, Int) -> Unit)? = null
@@ -81,6 +83,14 @@ class SpecialityAdapter @Inject constructor(
                     }
                 }
             binding.spSelectSpeciality.adapter = specialityAdapter
+
+            val selectSpecialityIndex = allSpecialities.map { it1 -> it1.specialityId }.indexOf(item.specialityId)
+            binding.spSelectSpeciality.setSelection(selectSpecialityIndex, true)
+
+            val findCategoryId = specialities[selectSpecialityIndex].specialityCategory.specialityCategoryId
+            if (!findCategoryId.isNullOrEmpty()) {
+                binding.spSelectCategory.setSelection(allCategories.map { it1 -> it1.specialityCategoryId }.indexOf(findCategoryId), true)
+            }
 
             binding.spSelectSpeciality.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {

@@ -56,6 +56,8 @@ class AccoladesAdapter @Inject constructor(
                     }
                 }
             binding.spSelectAccolades.adapter = accoladesAdapter
+            val position = allAccolades.map { it1 -> it1.accoladeTypeId }.indexOf(item.accoladeTypeId)
+            binding.spSelectAccolades.setSelection(if (position == -1) 0 else position)
 
             binding.spSelectAccolades.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -64,6 +66,7 @@ class AccoladesAdapter @Inject constructor(
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
 
+            binding.etDescription.setText(item.notes)
             binding.etDescription.addTextChangedListener {
                 val input = it.toString()
                 onNoteType?.invoke(input, bindingAdapterPosition)

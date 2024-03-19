@@ -2,6 +2,7 @@ package app.qup.doctor_management.presentation.add_doctor
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.Menu
@@ -23,17 +24,22 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import app.qup.doctor_management.data.remote.dto.general.AccoladesSet
 import app.qup.doctor_management.data.remote.dto.general.QualificationDegreeSet
 import app.qup.doctor_management.data.remote.dto.general.SpecialitySet
 import app.qup.doctor_management.data.remote.dto.request.DoctorRequestDto
 import app.qup.doctor_management.databinding.FragmentAddDoctorBinding
+import app.qup.doctor_management.domain.model.Doctor
+import app.qup.doctor_management.domain.model.Speciality
 import app.qup.doctor_management.domain.model.SpecialityCategory
+import app.qup.doctor_management.domain.model.User
 import app.qup.doctor_management.domain.model.toQualificationDegreeSet
 import app.qup.doctor_management.domain.model.toSpecialitySet
 import app.qup.ui.common.snack
 import app.qup.util.common.DEFAULT_LANGUAGE_ID
 import app.qup.util.common.LOCAL_DATE_FORMAT
+import app.qup.util.common.millisToDateString
 import app.qup.util.common.transformIntoDatePicker
 import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,7 +49,6 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-
 @AndroidEntryPoint
 class AddDoctorFragment : Fragment(), MenuProvider {
     private var _binding: FragmentAddDoctorBinding? = null
@@ -51,6 +56,7 @@ class AddDoctorFragment : Fragment(), MenuProvider {
 
     private val navController: NavController? by lazy { view?.findNavController() }
 
+    private val args by navArgs<AddDoctorFragmentArgs>()
     private val addDoctorViewModel by viewModels<AddDoctorViewModel>()
 
     private var selectedGender : String? = null
@@ -73,6 +79,7 @@ class AddDoctorFragment : Fragment(), MenuProvider {
     private var primarySpeciality: SpecialitySet? = null
 
     private var allDegrees = mutableListOf<QualificationDegreeSet>()
+    private var allAccolades = mutableListOf<AccoladesSet>()
     private var allSpecialityCategories = mutableListOf<SpecialityCategory>()
     private var allSpecialities = mutableListOf<SpecialitySet>()
 
@@ -102,6 +109,11 @@ class AddDoctorFragment : Fragment(), MenuProvider {
         stepNumberObserver()
         // Step 1
         binding.layoutStep1.etDob.transformIntoDatePicker(requireContext(), LOCAL_DATE_FORMAT)
+        binding.layoutStep1.etMobileNumber.isEnabled = args.mobileNumber == null
+        args.mobileNumber?.let {
+            binding.layoutStep1.etMobileNumber.setText(args.mobileNumber)
+        }
+
         loadGenders()
         bloodGroupLister()
         etMobileNumberListener()
@@ -112,7 +124,6 @@ class AddDoctorFragment : Fragment(), MenuProvider {
         addOtherDegree()
         // Step 3
         populateSpecialityCategory()
-        populateSpeciality(allSpecialityCategories)
         addOtherSpeciality()
         // Step 4
         setupMedAchievementAdapter()
@@ -122,6 +133,12 @@ class AddDoctorFragment : Fragment(), MenuProvider {
         addMedAchievement()
         addNonMedAchievement()
 
+        args.doctorId?.let {
+            loadDoctorData()
+        } ?: run {
+            getFormData()
+        }
+
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true /* enabled by default */) {
                 override fun handleOnBackPressed() {
@@ -129,6 +146,96 @@ class AddDoctorFragment : Fragment(), MenuProvider {
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+    }
+
+    private fun getFormData() {
+        addDoctorViewModel.getDegrees()
+        addDoctorViewModel.getAccolades()
+        addDoctorViewModel.getSpecialityCategories()
+    }
+
+    private fun loadDoctorData() {
+        addDoctorViewModel.getUserByNumber(args.mobileNumber!!)
+        addDoctorViewModel.userInfo.observe(viewLifecycleOwner) {
+            it.user?.let { user ->
+                fillUserData(user)
+                addDoctorViewModel.getDoctorById(args.doctorId!!)
+            }
+        }
+        addDoctorViewModel.getDoctorById.observe(viewLifecycleOwner) {
+            it.doctor?.let { doctor ->
+                fillDoctorData(doctor)
+                getFormData()
+            }
+        }
+    }
+
+    private fun fillUserData(user: User) {
+        binding.layoutStep1.etFirstName.setText(user.firstName)
+        binding.layoutStep1.etLastName.setText(user.lastName)
+
+        val allRadioButtons = mutableListOf<RadioButton>()
+        for (i in 0 until binding.layoutStep1.rgGender.childCount) {
+            allRadioButtons.add(binding.layoutStep1.rgGender.getChildAt(i) as RadioButton)
+        }
+
+        allRadioButtons.forEach { radioButton ->
+            radioButton.isChecked = radioButton.text == user.gender
+        }
+
+        binding.layoutStep1.etDob.setText(millisToDateString(user.dateOfBirth))
+        binding.layoutStep1.etEmail.setText(user.emailId)
+
+        val bloodGroup = user.bloodGroup
+        val group = bloodGroup.replace("+", "").replace("-", "")
+        if (bloodGroup.isNotEmpty())
+            binding.layoutStep1.tgBloodGroup.check(
+                when (group) {
+                    "A" -> binding.layoutStep1.optionA.id
+                    "B" -> binding.layoutStep1.optionB.id
+                    "AB" -> binding.layoutStep1.optionAb.id
+                    "O" -> binding.layoutStep1.optionO.id
+                    else -> -1
+                }
+            )
+        if (bloodGroup.contains("+")) {
+            binding.layoutStep1.tgBloodType.check(binding.layoutStep1.optionPositive.id)
+        } else if (bloodGroup.contains("-")) {
+            binding.layoutStep1.tgBloodType.check(binding.layoutStep1.optionNegative.id)
+        } else {
+            binding.layoutStep1.tgBloodType.check(-1)
+        }
+        getFormData()
+    }
+
+    private fun fillDoctorData(doctor: Doctor) {
+        // Step 2
+        binding.layoutStep2.etRegistrationNumber.setText(doctor.registrationNumber)
+        binding.layoutStep2.spYear.setSelection(getYearsTillDate().indexOf(doctor.registrationYear.toString()), true)
+        binding.layoutStep2.spMonth.setSelection(doctor.registrationMonth, true)
+        // Degree Fill
+        val primaryDegreeLocal = doctor.qualificationDegreeSet.filter { it1 -> it1.primary == true }
+        val nonPrimaryDegreeLocal = doctor.qualificationDegreeSet.filter { it1 -> it1.primary == false }
+        if (primaryDegreeLocal.isNotEmpty()) {
+            primaryDegree = primaryDegreeLocal[0]
+        }
+        if (nonPrimaryDegreeLocal.isNotEmpty()) selectedOtherDegrees.clear()
+        selectedOtherDegrees.addAll(nonPrimaryDegreeLocal)
+        // Step 3
+        val primarySpecialityLocal = doctor.specialitySet.filter { it1 -> it1.primary == true }
+        val nonPrimarySpecialityLocal = doctor.specialitySet.filter { it1 -> it1.primary == false }
+        if (primarySpecialityLocal.isNotEmpty()) {
+            primarySpeciality = primarySpecialityLocal[0]
+        }
+        if (nonPrimarySpecialityLocal.isNotEmpty()) selectedOtherSpecialities.clear()
+        selectedOtherSpecialities.addAll(nonPrimarySpecialityLocal)
+        // Step 4
+        if (doctor.accoladesSet.isNotEmpty()) selectedAccolades.clear()
+        selectedAccolades.addAll(doctor.accoladesSet)
+        if (doctor.medicalAchievements.isNotEmpty()) selectedMedAchievements.clear()
+        selectedMedAchievements.addAll(doctor.medicalAchievements)
+        if (doctor.nonMedicalAchievements.isNotEmpty()) selectedNonMedAchievements.clear()
+        selectedNonMedAchievements.addAll(doctor.nonMedicalAchievements)
     }
 
     @SuppressLint("SetTextI18n")
@@ -150,7 +257,7 @@ class AddDoctorFragment : Fragment(), MenuProvider {
     }
 
     // Add Doctor
-    private fun addDoctor() {
+    private fun addUpdateDoctor() {
         // Step 1
         val mobileNumber = binding.layoutStep1.etMobileNumber.text.toString()
         val firstName = binding.layoutStep1.etFirstName.text.toString()
@@ -167,40 +274,57 @@ class AddDoctorFragment : Fragment(), MenuProvider {
         val finalSpecialities = primarySpeciality?.let { mutableListOf(it) }
         finalSpecialities?.addAll(selectedOtherSpecialities)
 
-        addDoctorViewModel.addDoctor(
-            doctorRequestDto = DoctorRequestDto(
-                // Step 1
-                mobileNumber = mobileNumber.toLong(),
-                firstName = firstName,
-                lastName = lastName,
-                gender = selectedGender,
-                dateOfBirth = if (dobText.isEmpty()) null else DateTime(mSDF.parse(dobText), DateTimeZone.UTC).toString(),
-                emailId = emailId,
-                bloodGroup = "$selectedBloodGroup$selectedBloodType",
+        val doctorRequestDto = DoctorRequestDto(
+            // Step 1
+            mobileNumber = mobileNumber.toLong(),
+            firstName = firstName,
+            lastName = lastName,
+            gender = selectedGender,
+            dateOfBirth = if (dobText.isEmpty()) null else DateTime(mSDF.parse(dobText), DateTimeZone.UTC).toString(),
+            emailId = emailId,
+            bloodGroup = "$selectedBloodGroup$selectedBloodType",
 
-                // Step 2
-                registrationNumber = registrationNumber,
-                registrationYear = selectedRegYear,
-                registrationMonth = selectedRegMonth,
-                qualificationDegreeSet = finalQualificationDegreeSet?.filter { it1 -> it1.name != "Select Degree"},
+            // Step 2
+            registrationNumber = registrationNumber,
+            registrationYear = selectedRegYear,
+            registrationMonth = selectedRegMonth,
+            qualificationDegreeSet = finalQualificationDegreeSet?.filter { it1 -> it1.name != "Select Degree"},
 
-                // Step 3
-                specialitySet = finalSpecialities?.filter { it1 -> it1.name != "Select Speciality" },
+            // Step 3
+            specialitySet = finalSpecialities?.filter { it1 -> it1.name != "Select Speciality" },
 
-                // Step 4
-                accoladesSet = selectedAccolades.filter { it1 -> it1.accoladeType != "Select Accolade" },
-                medicalAchievements = selectedNonMedAchievements.filter { it1 -> it1.isNotEmpty() },
-                nonMedicalAchievements = selectedNonMedAchievements.filter { it1 -> it1.isNotEmpty() },
+            // Step 4
+            accoladesSet = selectedAccolades.filter { it1 -> it1.accoladeType != "Select Accolade" },
+            medicalAchievements = selectedMedAchievements.filter { it1 -> it1.isNotEmpty() },
+            nonMedicalAchievements = selectedNonMedAchievements.filter { it1 -> it1.isNotEmpty() },
 
-                // Other
-                preferredLanguageId = DEFAULT_LANGUAGE_ID,
-                communicationType = mutableListOf(),
-            )
+            // Other
+            preferredLanguageId = DEFAULT_LANGUAGE_ID,
+            communicationType = mutableListOf(),
         )
+        args.doctorId?.let {
+            addDoctorViewModel.updateDoctor(
+                id = args.doctorId!!,
+                doctorRequestDto = doctorRequestDto
+            )
+        } ?: run {
+            addDoctorViewModel.addDoctor(
+                doctorRequestDto = doctorRequestDto
+            )
+        }
         addDoctorViewModel.addDoctor.observe(viewLifecycleOwner) {
             it.doctor?.let {
                 navController?.popBackStack()
             }
+            binding.progressBar.isVisible = it.isLoading
+            binding.btnNext.isEnabled = !it.isLoading
+        }
+        addDoctorViewModel.updateDoctor.observe(viewLifecycleOwner) {
+            it.doctor?.let {
+                navController?.popBackStack()
+            }
+            binding.progressBar.isVisible = it.isLoading
+            binding.btnNext.isEnabled = !it.isLoading
         }
     }
 
@@ -321,6 +445,11 @@ class AddDoctorFragment : Fragment(), MenuProvider {
                         location = location
                     )
                 }
+
+                primaryDegree?.let {
+                    binding.layoutStep2.layoutPrimaryDegree.spSelectDegree.setSelection(allDegrees.map { it1 -> it1.educationDegreeId }.indexOf(primaryDegree!!.educationDegreeId), true)
+                    binding.layoutStep2.layoutPrimaryDegree.etAddLocation.setText(primaryDegree!!.location)
+                }
             }
         }
         binding.layoutStep2.layoutPrimaryDegree.etAddLocation.addTextChangedListener {
@@ -342,7 +471,6 @@ class AddDoctorFragment : Fragment(), MenuProvider {
     // Step 3
 
     private fun populateSpecialityCategory() {
-        addDoctorViewModel.getSpecialityCategories()
         addDoctorViewModel.specialityCategories.observe(viewLifecycleOwner) {
             it.specialityCategories?.let { specialityCategories ->
                 val finalSpecialityCategories: MutableList<SpecialityCategory> = specialityCategories.toMutableList()
@@ -379,12 +507,12 @@ class AddDoctorFragment : Fragment(), MenuProvider {
                     }
                     override fun onNothingSelected(parent: AdapterView<*>?) {}
                 }
+                addDoctorViewModel.getSpecialities()
             }
         }
     }
 
     private fun populateSpeciality(allSpecialityCategories: MutableList<SpecialityCategory>) {
-        addDoctorViewModel.getSpecialities()
         addDoctorViewModel.specialities.observe(viewLifecycleOwner) {
             it.specialities?.let { specialities ->
                 val finalSpecialities: MutableList<SpecialitySet> = specialities.map { it1 -> it1.toSpecialitySet() }.toMutableList()
@@ -421,16 +549,28 @@ class AddDoctorFragment : Fragment(), MenuProvider {
                     }
                     override fun onNothingSelected(parent: AdapterView<*>?) {}
                 }
-                setupOtherSpecialityAdapter(allSpecialityCategories, allSpecialities)
+                setupOtherSpecialityAdapter(allSpecialityCategories, allSpecialities, specialities)
+
+                primarySpeciality?.let {
+                    val selectSpecialityIndex = allSpecialities.map { it1 -> it1.specialityId }.indexOf(primarySpeciality!!.specialityId)
+                    binding.layoutStep3.layoutPrimarySpeciality.spSelectSpeciality.setSelection(selectSpecialityIndex)
+
+                    val findCategoryId = specialities[selectSpecialityIndex].specialityCategory.specialityCategoryId
+                    if (!findCategoryId.isNullOrEmpty()) {
+                        binding.layoutStep3.layoutPrimarySpeciality.spSelectCategory.setSelection(allSpecialityCategories.map { it1 -> it1.specialityCategoryId }.indexOf(findCategoryId))
+                    }
+                }
+
             }
         }
     }
 
     private fun setupOtherSpecialityAdapter(
         allSpecialityCategories: MutableList<SpecialityCategory>,
-        allSpecialities: MutableList<SpecialitySet>
+        allSpecialities: MutableList<SpecialitySet>,
+        specialities: List<Speciality>
     ) {
-        otherSpecialityAdapter = SpecialityAdapter(allSpecialityCategories, allSpecialities)
+        otherSpecialityAdapter = SpecialityAdapter(allSpecialityCategories, allSpecialities, specialities)
         binding.layoutStep3.rvOtherSpecialities.adapter = otherSpecialityAdapter
         otherSpecialityAdapter.submitList(selectedOtherSpecialities)
         otherSpecialityAdapter.selectedSpeciality = { selectedSpeciality, position ->
@@ -457,7 +597,9 @@ class AddDoctorFragment : Fragment(), MenuProvider {
         binding.layoutStep4.rvMedicalAchievements.setItemViewCacheSize(1000)
         medAchievementAdapter.submitList(selectedMedAchievements)
         medAchievementAdapter.onMedAchievementType = { achievement, position ->
+            Log.d("TAG", "setupMedAchievementAdapter: before $achievement")
             selectedMedAchievements[position] = achievement
+            Log.d("TAG", "setupMedAchievementAdapter: after ${selectedMedAchievements[position]}")
         }
     }
 
@@ -474,7 +616,10 @@ class AddDoctorFragment : Fragment(), MenuProvider {
     private fun accoladesObserver() {
         addDoctorViewModel.accolades.observe(viewLifecycleOwner) {
             it.accolades?.let { accolades ->
-                setupAccoladesAdapter(accolades)
+                val finalAccolades = accolades.toMutableList()
+                finalAccolades.add(0, AccoladesSet(accoladeType =  "Select Accolade"))
+                allAccolades = finalAccolades
+                setupAccoladesAdapter(allAccolades)
             }
         }
     }
@@ -535,7 +680,7 @@ class AddDoctorFragment : Fragment(), MenuProvider {
                 addDoctorViewModel.stepNumber.postValue(4)
             }
             if (currentValue == 4) {
-                addDoctor()
+                addUpdateDoctor()
             }
         }
         binding.btnPrev.setOnClickListener {
@@ -549,7 +694,7 @@ class AddDoctorFragment : Fragment(), MenuProvider {
         addDoctorViewModel.stepNumber.observe(viewLifecycleOwner) {
             binding.btnPrev.isVisible = it != 1
             binding.btnNext.isVisible = it in 1..4
-            binding.btnNext.text = if (it in 1..3) "Next" else if (it == 4) "Submit" else "Invalid State"
+            binding.btnNext.text = if (it in 1..3) "Next" else if (it == 4) { if (args.doctorId == null) "Submit" else "Update" } else "Invalid State"
 
             binding.layoutStep1.root.isVisible = it == 1
             binding.layoutStep2.root.isVisible = it == 2

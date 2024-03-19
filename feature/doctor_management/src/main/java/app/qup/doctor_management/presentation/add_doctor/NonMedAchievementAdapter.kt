@@ -25,6 +25,7 @@ class NonMedAchievementAdapter @Inject constructor() : ListAdapter<String, NonMe
 
     inner class NonMedAchievementViewHolder(private val binding: ListItemNonMedicalAchievementBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: String) {
+            binding.etNonMedicalAchievements.setText(item)
             binding.etNonMedicalAchievements.addTextChangedListener {
                 val input = it.toString()
                 onNonMedAchievementType?.invoke(input, bindingAdapterPosition)

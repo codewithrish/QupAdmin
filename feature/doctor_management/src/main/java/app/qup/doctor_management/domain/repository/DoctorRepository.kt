@@ -2,6 +2,7 @@ package app.qup.doctor_management.domain.repository
 
 import androidx.paging.PagingData
 import app.qup.doctor_management.data.remote.dto.general.DoctorSearchResource
+import app.qup.doctor_management.data.remote.dto.general.UserResource
 import app.qup.doctor_management.data.remote.dto.request.DoctorRequestDto
 import app.qup.doctor_management.data.remote.dto.response.AccoladeResponseDto
 import app.qup.doctor_management.data.remote.dto.response.DegreeResponseDto
@@ -21,4 +22,7 @@ interface DoctorRepository {
     suspend fun getActiveSpecialityMaster(): Response<List<SpecialityResponseDto>>
     suspend fun getActiveSpecialityCategoryMaster(): Response<List<SpecialityCategoryResponseDto>>
     suspend fun getActiveAccolades(): Response<List<AccoladeResponseDto>>
+    suspend fun getUserInfo(mobileNumber: String): Response<UserResource>
+    suspend fun getDoctorById(id: String): Response<DoctorResponseDto>
+    suspend fun updateDoctorById(id: String,doctorRequestDto: DoctorRequestDto): Response<DoctorResponseDto>
 }

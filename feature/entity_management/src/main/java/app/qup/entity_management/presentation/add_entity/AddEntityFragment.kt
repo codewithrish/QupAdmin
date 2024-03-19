@@ -250,6 +250,8 @@ class AddEntityFragment : Fragment(), MenuProvider {
                     binding.root.snack(error)
                 }
             }
+            binding.progressBar.isVisible = it.isLoading
+            binding.btnNext.isEnabled = !it.isLoading
         }
         addEntityViewModel.updateEntity.observe(viewLifecycleOwner) {
             it.entity?.let {
@@ -260,6 +262,8 @@ class AddEntityFragment : Fragment(), MenuProvider {
                     binding.root.snack(error)
                 }
             }
+            binding.progressBar.isVisible = it.isLoading
+            binding.btnNext.isEnabled = !it.isLoading
         }
     }
 

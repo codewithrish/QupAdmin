@@ -1,5 +1,6 @@
 package app.qup.doctor_management.presentation.add_doctor
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
@@ -25,8 +26,10 @@ class MedAchievementAdapter @Inject constructor() : ListAdapter<String, MedAchie
 
     inner class MedAchievementViewHolder(private val binding: ListItemMedicalAchievementBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: String) {
+            binding.etMedicalAchievements.setText(item)
             binding.etMedicalAchievements.addTextChangedListener {
                 val input = it.toString()
+                Log.d("TAG", "bind: $input")
                 onMedAchievementType?.invoke(input, bindingAdapterPosition)
             }
         }

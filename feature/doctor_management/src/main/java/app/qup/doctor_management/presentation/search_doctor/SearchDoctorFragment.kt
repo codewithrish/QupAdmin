@@ -18,6 +18,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.paging.PagingData
 import app.qup.doctor_management.databinding.FragmentSearchDoctorBinding
 import app.qup.ui.common.LoaderAdapter
@@ -36,6 +37,7 @@ class SearchDoctorFragment : Fragment(), MenuProvider {
 
     private lateinit var doctorAdapter: DoctorAdapter
     private val searchDoctorViewModel by viewModels<SearchDoctorViewModel>()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,6 +60,8 @@ class SearchDoctorFragment : Fragment(), MenuProvider {
         searchDoctor()
         loadDoctors()
         addDoctor()
+
+
     }
 
     private fun setupAdapter() {
@@ -66,6 +70,13 @@ class SearchDoctorFragment : Fragment(), MenuProvider {
             header = LoaderAdapter(),
             footer = LoaderAdapter()
         )
+        doctorAdapter.onItemClick = { doctorR ->
+            val action = SearchDoctorFragmentDirections.actionSearchDoctorFragmentToAddDoctorFragment(
+                mobileNumber = doctorR.mobileNumber.toString(),
+                doctorId = doctorR.doctorId,
+            )
+            navController?.safeNavigate(action)
+        }
     }
 
     private fun searchDoctor() {
