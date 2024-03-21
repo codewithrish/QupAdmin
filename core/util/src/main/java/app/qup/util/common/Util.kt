@@ -62,3 +62,12 @@ fun String.isValidEmail(): Boolean {
     val pattern: Pattern = Patterns.EMAIL_ADDRESS
     return pattern.matcher(this).matches()
 }
+
+fun getMidNightTime(): Long {
+    return Calendar.getInstance().apply {
+        set(Calendar.HOUR_OF_DAY, 0)
+        set(Calendar.MINUTE, 0)
+        set(Calendar.SECOND, 0)
+        set(Calendar.MILLISECOND, 0)
+    }.timeInMillis
+}

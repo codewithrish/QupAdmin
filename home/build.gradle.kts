@@ -1,4 +1,3 @@
-@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
@@ -17,6 +16,7 @@ dependencies {
     implementation(project(":feature:reception_management"))
     implementation(project(":feature:srk_management"))
     implementation(project(":feature:entity_management"))
+    implementation(project(":feature:summary"))
 
     implementation(libs.core.ktx)
     implementation(libs.appcompat)

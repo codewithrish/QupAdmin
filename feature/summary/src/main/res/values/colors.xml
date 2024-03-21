@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--OPD Status Colors-->
+    <color name="status_active">#4dae2a</color>
+    <color name="status_yet_to_open">#9A9A9A</color>
+    <color name="status_on_leave">#F3E73E</color>
+    <color name="status_fast">#E1A435</color>
+    <color name="status_full">#DB7061</color>
+    <color name="status_done_green">#709A29</color>
+    <color name="status_cancelled">#FF5050</color>
+</resources>

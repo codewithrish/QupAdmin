@@ -2,8 +2,6 @@ package app.qup.network.common
 
 import app.qup.util.common.JWT_ACCESS_TOKEN_PREF
 import app.qup.util.common.QupSharedPrefManager
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject

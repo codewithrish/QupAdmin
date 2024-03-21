@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/summary_graph"
+    app:startDestination="@id/queueSummaryFragment">
+
+    <fragment
+        android:id="@+id/queueSummaryFragment"
+        android:name="app.qup.summary.presentation.QueueSummaryFragment"
+        android:label="Queue Summary"
+        tools:layout="@layout/fragment_queue_summary" />
+</navigation>

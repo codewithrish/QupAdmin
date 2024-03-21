@@ -20,6 +20,7 @@
             <option value="$PROJECT_DIR$/feature/entity_management" />
             <option value="$PROJECT_DIR$/feature/reception_management" />
             <option value="$PROJECT_DIR$/feature/srk_management" />
+            <option value="$PROJECT_DIR$/feature/summary" />
             <option value="$PROJECT_DIR$/home" />
           </set>
         </option>
