@@ -147,11 +147,15 @@ class QueueSummaryFragment : Fragment(), MenuProvider {
                     summaryList
                 } else {
                     summaryList.filter { it1 ->
-                        it1.doctorFullName.lowercase().contains(searchQuery) &&
-                        it1.businessSideOPDSlotStatus == selectedOpdStatusValue?.name
+                        if (selectedOpdStatusValue?.name == null) {
+                            it1.doctorFullName.lowercase().contains(searchQuery)
+                        } else {
+                            it1.doctorFullName.lowercase().contains(searchQuery) &&
+                            it1.businessSideOPDSlotStatus == selectedOpdStatusValue?.name
+                        }
                     }
                 }
-                binding.tvNoRecords.isVisible = filteredList.isEmpty()
+                binding.lblNoRecords.isVisible = filteredList.isEmpty()
                 summaryAdapter.submitList(filteredList)
             }
             binding.optionCustom.id -> {
@@ -159,11 +163,15 @@ class QueueSummaryFragment : Fragment(), MenuProvider {
                     customSummaryList
                 } else {
                     customSummaryList.filter { it1 ->
-                        it1.doctorFullName.lowercase().contains(searchQuery) &&
-                                it1.businessSideOPDSlotStatus == selectedOpdStatusValue?.name
+                        if (selectedOpdStatusValue?.name == null) {
+                            it1.doctorFullName.lowercase().contains(searchQuery)
+                        } else {
+                            it1.doctorFullName.lowercase().contains(searchQuery) &&
+                            it1.businessSideOPDSlotStatus == selectedOpdStatusValue?.name
+                        }
                     }
                 }
-                binding.tvNoRecords.isVisible = filteredList.isEmpty()
+                binding.lblNoRecords.isVisible = filteredList.isEmpty()
                 customSummaryAdapter.submitList(filteredList)
             }
         }
@@ -249,6 +257,7 @@ class QueueSummaryFragment : Fragment(), MenuProvider {
                 summaryAdapter.submitList(summaryList)
             }
             binding.progressBar.isVisible = it.isLoading
+            binding.lblNoRecords.isVisible = summaryList.isEmpty()
         }
         queueSummaryViewModel.customQueueSummary.observe(viewLifecycleOwner) {
             it.customSummaryList?.let { customSummaryList ->
@@ -259,6 +268,7 @@ class QueueSummaryFragment : Fragment(), MenuProvider {
                 customSummaryAdapter.submitList(customSummaryList)
             }
             binding.progressBar.isVisible = it.isLoading
+            binding.lblNoRecords.isVisible = customSummaryList.isEmpty()
         }
     }
 
