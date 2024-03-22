@@ -12,7 +12,6 @@ data class Degree(
 fun Degree.toQualificationDegreeSet(): QualificationDegreeSet {
     return QualificationDegreeSet(
         educationDegreeId = educationDegreeId,
-        location = description,
         name = name,
         primary = false
     )

@@ -89,7 +89,7 @@ class SpecialityAdapter @Inject constructor(
 
             val findCategoryId = specialities[selectSpecialityIndex].specialityCategory.specialityCategoryId
             if (!findCategoryId.isNullOrEmpty()) {
-                binding.spSelectCategory.setSelection(allCategories.map { it1 -> it1.specialityCategoryId }.indexOf(findCategoryId), true)
+                binding.spSelectCategory.setSelection(allCategories.map { it1 -> it1.specialityCategoryId }.indexOf(findCategoryId) + 1, true)
             }
 
             binding.spSelectSpeciality.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {

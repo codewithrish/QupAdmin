@@ -74,7 +74,7 @@ class AddDoctorFragment : Fragment(), MenuProvider {
 
     private var selectedRegYear: Int? = null
     private var selectedRegMonth: Int? = null
-    private var primaryDegree: QualificationDegreeSet? = null
+    private var primaryDegree: QualificationDegreeSet = QualificationDegreeSet()
     private var primarySpecialityCategory: SpecialityCategory? = null
     private var primarySpeciality: SpecialitySet? = null
 
@@ -205,7 +205,6 @@ class AddDoctorFragment : Fragment(), MenuProvider {
         } else {
             binding.layoutStep1.tgBloodType.check(-1)
         }
-        getFormData()
     }
 
     private fun fillDoctorData(doctor: Doctor) {
@@ -217,7 +216,12 @@ class AddDoctorFragment : Fragment(), MenuProvider {
         val primaryDegreeLocal = doctor.qualificationDegreeSet.filter { it1 -> it1.primary == true }
         val nonPrimaryDegreeLocal = doctor.qualificationDegreeSet.filter { it1 -> it1.primary == false }
         if (primaryDegreeLocal.isNotEmpty()) {
-            primaryDegree = primaryDegreeLocal[0]
+            primaryDegree = primaryDegree.copy(
+                educationDegreeId = primaryDegreeLocal[0].educationDegreeId,
+                location = primaryDegreeLocal[0].location,
+                name = primaryDegreeLocal[0].name,
+                primary = primaryDegreeLocal[0].primary
+            )
         }
         if (nonPrimaryDegreeLocal.isNotEmpty()) selectedOtherDegrees.clear()
         selectedOtherDegrees.addAll(nonPrimaryDegreeLocal)
@@ -268,8 +272,8 @@ class AddDoctorFragment : Fragment(), MenuProvider {
         // Step 2
         val registrationNumber = binding.layoutStep2.etRegistrationNumber.text.toString()
 
-        val finalQualificationDegreeSet = primaryDegree?.let { mutableListOf(it) }
-        finalQualificationDegreeSet?.addAll(selectedOtherDegrees)
+        val finalQualificationDegreeSet = mutableListOf(primaryDegree)
+        finalQualificationDegreeSet.addAll(selectedOtherDegrees)
 
         val finalSpecialities = primarySpeciality?.let { mutableListOf(it) }
         finalSpecialities?.addAll(selectedOtherSpecialities)
@@ -288,7 +292,7 @@ class AddDoctorFragment : Fragment(), MenuProvider {
             registrationNumber = registrationNumber,
             registrationYear = selectedRegYear,
             registrationMonth = selectedRegMonth,
-            qualificationDegreeSet = finalQualificationDegreeSet?.filter { it1 -> it1.name != "Select Degree"},
+            qualificationDegreeSet = finalQualificationDegreeSet.filter { it1 -> it1.name != "Select Degree"},
 
             // Step 3
             specialitySet = finalSpecialities?.filter { it1 -> it1.name != "Select Speciality" },
@@ -422,8 +426,12 @@ class AddDoctorFragment : Fragment(), MenuProvider {
                 binding.layoutStep2.layoutPrimaryDegree.spSelectDegree.setAdapter(degreesAdapter)
                 binding.layoutStep2.layoutPrimaryDegree.spSelectDegree.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                        primaryDegree = degreesAdapter.getItem(position) as QualificationDegreeSet
-                        primaryDegree = primaryDegree?.copy(primary = true)
+                        val selectedItem = degreesAdapter.getItem(position) as QualificationDegreeSet
+                        primaryDegree = primaryDegree.copy(
+                            educationDegreeId = selectedItem.educationDegreeId,
+                            name = selectedItem.name,
+                            primary = true
+                        )
                     }
                     override fun onNothingSelected(parent: AdapterView<*>?) {}
                 }
@@ -446,15 +454,17 @@ class AddDoctorFragment : Fragment(), MenuProvider {
                     )
                 }
 
-                primaryDegree?.let {
-                    binding.layoutStep2.layoutPrimaryDegree.spSelectDegree.setSelection(allDegrees.map { it1 -> it1.educationDegreeId }.indexOf(primaryDegree!!.educationDegreeId), true)
-                    binding.layoutStep2.layoutPrimaryDegree.etAddLocation.setText(primaryDegree!!.location)
+                primaryDegree.let {
+                    Log.d("TAG", "populateDegrees: $primaryDegree")
+                    binding.layoutStep2.layoutPrimaryDegree.spSelectDegree.setSelection(allDegrees.map { it1 -> it1.educationDegreeId }.indexOf(
+                        primaryDegree.educationDegreeId), true)
+                    binding.layoutStep2.layoutPrimaryDegree.etAddLocation.setText(primaryDegree.location)
                 }
             }
         }
         binding.layoutStep2.layoutPrimaryDegree.etAddLocation.addTextChangedListener {
             val input = it.toString()
-            primaryDegree = primaryDegree?.copy(
+            primaryDegree = primaryDegree.copy(
                 location = input
             )
         }
@@ -555,9 +565,12 @@ class AddDoctorFragment : Fragment(), MenuProvider {
                     val selectSpecialityIndex = allSpecialities.map { it1 -> it1.specialityId }.indexOf(primarySpeciality!!.specialityId)
                     binding.layoutStep3.layoutPrimarySpeciality.spSelectSpeciality.setSelection(selectSpecialityIndex)
 
-                    val findCategoryId = specialities[selectSpecialityIndex].specialityCategory.specialityCategoryId
-                    if (!findCategoryId.isNullOrEmpty()) {
-                        binding.layoutStep3.layoutPrimarySpeciality.spSelectCategory.setSelection(allSpecialityCategories.map { it1 -> it1.specialityCategoryId }.indexOf(findCategoryId))
+                    val temp = specialities.filter { it1 -> it1.specialityId == allSpecialities[selectSpecialityIndex].specialityId }
+                    if (temp.isNotEmpty()) {
+                        val findCategoryId = temp[0].specialityCategory.specialityCategoryId
+                        if (!findCategoryId.isNullOrEmpty()) {
+                            binding.layoutStep3.layoutPrimarySpeciality.spSelectCategory.setSelection(allSpecialityCategories.map { it1 -> it1.specialityCategoryId }.indexOf(findCategoryId))
+                        }
                     }
                 }
 
