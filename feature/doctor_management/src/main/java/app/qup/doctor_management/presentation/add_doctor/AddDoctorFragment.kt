@@ -133,12 +133,6 @@ class AddDoctorFragment : Fragment(), MenuProvider {
         addMedAchievement()
         addNonMedAchievement()
 
-        args.doctorId?.let {
-            loadDoctorData()
-        } ?: run {
-            getFormData()
-        }
-
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true /* enabled by default */) {
                 override fun handleOnBackPressed() {
@@ -341,6 +335,12 @@ class AddDoctorFragment : Fragment(), MenuProvider {
                         text = gender
                     }
                     binding.layoutStep1.rgGender.addView(rb)
+
+                    args.doctorId?.let {
+                        loadDoctorData()
+                    } ?: run {
+                        getFormData()
+                    }
                 }
             }
         }
