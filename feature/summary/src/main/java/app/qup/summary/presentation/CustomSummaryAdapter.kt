@@ -34,7 +34,7 @@ class CustomSummaryAdapter @Inject constructor(
     inner class CustomSummaryViewHolder(private val binding: ListItemSummaryBinding): RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind(item: CustomSummary) {
-            binding.tvSno.text = "${adapterPosition + 1}."
+            binding.tvSno.text = "${bindingAdapterPosition + 1}."
             binding.tvDoctorName.text = item.doctorFullName.ifEmpty { "-" }
             binding.tvSlotNameTime.text = "${item.mainSlotName} " +
                     "(${millisToDateString(dateTimeInMillis + item.opdStartTimeSecsFromMidnight, LOCAL_TIME_FORMAT)}-" +
