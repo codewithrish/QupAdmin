@@ -155,7 +155,7 @@ class QueueSummaryFragment : Fragment(), MenuProvider {
                         }
                     }
                 }
-                binding.lblNoRecords.isVisible = filteredList.isEmpty()
+                binding.lblNoRecords.isVisible = filteredList.isEmpty() && (searchQuery.isNotEmpty() || binding.spValues.selectedItemPosition > 0)
                 summaryAdapter.submitList(filteredList)
             }
             binding.optionCustom.id -> {
@@ -171,7 +171,7 @@ class QueueSummaryFragment : Fragment(), MenuProvider {
                         }
                     }
                 }
-                binding.lblNoRecords.isVisible = filteredList.isEmpty()
+                binding.lblNoRecords.isVisible = filteredList.isEmpty() && (searchQuery.isNotEmpty() || binding.spValues.selectedItemPosition > 0)
                 customSummaryAdapter.submitList(filteredList)
             }
         }
@@ -180,6 +180,8 @@ class QueueSummaryFragment : Fragment(), MenuProvider {
     private fun normalCustomListener() {
         binding.tgSummaryType.addOnButtonCheckedListener { _, _, isChecked ->
             if (isChecked) {
+                binding
+                binding.etDoctorName.setText("")
                 getOpdStatusValues()
                 loadSummary()
             }
@@ -203,9 +205,10 @@ class QueueSummaryFragment : Fragment(), MenuProvider {
 
                 currentSelectedDate = myCalendar.timeInMillis
 
-                loadSummary()
-
                 binding.tvDate.text = millisToDateString(myCalendar.timeInMillis, LOCAL_DATE_FORMAT)
+                binding.spValues.setSelection(0)
+
+                loadSummary()
             }
 
         binding.tvDate.setOnClickListener {
@@ -250,25 +253,27 @@ class QueueSummaryFragment : Fragment(), MenuProvider {
         }
         queueSummaryViewModel.queueSummary.observe(viewLifecycleOwner) {
             it.summaryList?.let { summaryList ->
+                binding.lblNoRecords.isVisible = summaryList.isEmpty()
                 binding.tvTotalOnlineBookingsMade.text = "Total Online Bookings Made: ${summaryList.sumOf { it1 -> it1.noOfOnlineBookingsMade }}"
                 binding.tvTotalWalkInBookingsMade.text = "Total WalkIn Bookings Made: ${summaryList.sumOf { it1 -> (it1.totalNoOfBookingsMade - it1.noOfOnlineBookingsMade) }}"
                 setupSummaryAdapter()
                 this.summaryList = summaryList
                 summaryAdapter.submitList(summaryList)
             }
+            binding.rvSummary.isVisible = !it.isLoading
             binding.progressBar.isVisible = it.isLoading
-            binding.lblNoRecords.isVisible = summaryList.isEmpty()
         }
         queueSummaryViewModel.customQueueSummary.observe(viewLifecycleOwner) {
             it.customSummaryList?.let { customSummaryList ->
+                binding.lblNoRecords.isVisible = customSummaryList.isEmpty()
                 binding.tvTotalOnlineBookingsMade.text = "Total Online Bookings Made: ${customSummaryList.sumOf { it1 -> it1.noOfOnlineBookingsMade }}"
-                binding.tvTotalWalkInBookingsMade.text = "Total WalkIn Bookings Made: ${customSummaryList.sumOf { it1 -> (it1.totalNoOfBookingsAllowed - it1.noOfOnlineBookingsMade) }}"
+                binding.tvTotalWalkInBookingsMade.text = "Total WalkIn Bookings Made: ${customSummaryList.sumOf { it1 -> it1.totalNoOfWalkingBookingMade }}"
                 setupCustomSummaryAdapter()
                 this.customSummaryList = customSummaryList
                 customSummaryAdapter.submitList(customSummaryList)
             }
+            binding.rvSummary.isVisible = !it.isLoading
             binding.progressBar.isVisible = it.isLoading
-            binding.lblNoRecords.isVisible = customSummaryList.isEmpty()
         }
     }
 

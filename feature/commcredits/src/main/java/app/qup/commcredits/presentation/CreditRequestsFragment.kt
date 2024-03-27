@@ -72,16 +72,18 @@ class CreditRequestsFragment : Fragment(), MenuProvider {
             val query = it.toString().trim().lowercase()
             when (binding.tgCommType.checkedButtonId) {
                 binding.optionSms.id ->
-                    smsAdapter.submitList(if (query.isEmpty()) smsRequests else smsRequests.filter { it1 ->
-                        it1.doctorName.trim().lowercase().contains(query) ||
-                        it1.entityName.trim().lowercase().contains(query) }
-                    )
+                    if (this::smsAdapter.isInitialized)
+                        smsAdapter.submitList(if (query.isEmpty()) smsRequests else smsRequests.filter { it1 ->
+                            it1.doctorName.trim().lowercase().contains(query) ||
+                            it1.entityName.trim().lowercase().contains(query) }
+                        )
 
                 binding.optionNotification.id ->
-                    notificationAdapter.submitList(if (query.isEmpty()) notificationRequests else notificationRequests.filter { it1 ->
-                        it1.doctorName.trim().lowercase().contains(query) ||
-                        it1.entityName.trim().lowercase().contains(query) }
-                    )
+                    if (this::notificationAdapter.isInitialized)
+                        notificationAdapter.submitList(if (query.isEmpty()) notificationRequests else notificationRequests.filter { it1 ->
+                            it1.doctorName.trim().lowercase().contains(query) ||
+                            it1.entityName.trim().lowercase().contains(query) }
+                        )
             }
         }
     }
@@ -89,6 +91,7 @@ class CreditRequestsFragment : Fragment(), MenuProvider {
     private fun toggleListener() {
         binding.tgCommType.addOnButtonCheckedListener { _, _, isChecked ->
             if (isChecked) {
+                binding.etDoctorEntity.setText("")
                 loadCreditRequests()
             }
         }
