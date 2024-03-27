@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp"
+    tools:context=".presentation.admin_notes.AdminNotesFragment">
+
+    <TextView
+        android:id="@+id/lbl_approve_Credit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Admin Notes"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="?attr/colorSurfaceVariant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_approve_Credit" />
+
+    <ImageView
+        android:id="@+id/btn_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_close"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@null" />
+
+    <TextView
+        android:id="@+id/lbl_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Date: "
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="23-Mar-2024"
+        app:layout_constraintStart_toEndOf="@+id/lbl_date"
+        app:layout_constraintTop_toTopOf="@+id/lbl_date" />
+
+    <TextView
+        android:id="@+id/lbl_stage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Stage: "
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_date" />
+
+    <TextView
+        android:id="@+id/tv_stage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Approved"
+        app:layout_constraintStart_toEndOf="@+id/lbl_stage"
+        app:layout_constraintTop_toTopOf="@+id/lbl_stage" />+
+
+
+    <TextView
+        android:id="@+id/lbl_admin_note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Note Text: "
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_stage" />
+
+    <TextView
+        android:id="@+id/tv_admin_note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Approved By Admin"
+        app:layout_constraintStart_toEndOf="@+id/lbl_admin_note"
+        app:layout_constraintTop_toTopOf="@+id/lbl_admin_note" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

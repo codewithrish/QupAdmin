@@ -56,5 +56,9 @@ class HomeFragment : Fragment() {
             val action = HomeFragmentDirections.actionHomeFragmentToSummaryGraph()
             navController?.safeNavigate(action)
         }
+        binding.btnCommCredits.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToCommGraph()
+            navController?.safeNavigate(action)
+        }
     }
 }

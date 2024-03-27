@@ -37,8 +37,8 @@ class SummaryAdapter @Inject constructor(
             binding.tvSno.text = "${bindingAdapterPosition + 1}."
             binding.tvDoctorName.text = item.doctorFullName.ifEmpty { "-" }
             binding.tvSlotNameTime.text = "${item.bookingQueueSlotName} " +
-                    "(${millisToDateString(dateTimeInMillis + item.opdStartTimeSecsFromMidnight, LOCAL_TIME_FORMAT)}-" +
-                    "${millisToDateString(dateTimeInMillis + item.opdEndTimeSecsFromMidnight, LOCAL_TIME_FORMAT)})".ifEmpty { "-" }
+                    "(${millisToDateString(dateTimeInMillis + item.opdStartTimeSecsFromMidnight*1000, LOCAL_TIME_FORMAT)}-" +
+                    "${millisToDateString(dateTimeInMillis + item.opdEndTimeSecsFromMidnight*1000, LOCAL_TIME_FORMAT)})".ifEmpty { "-" }
             binding.tvOpdStatus.text = item.businessOPDStatusDesc
             binding.tvBookingCount.text = "Bookings Made: [Online: ${item.noOfOnlineBookingsMade}, Walk-In: ${item.totalNoOfBookingsMade - item.noOfOnlineBookingsMade}, Total: ${item.totalNoOfBookingsMade}]".ifEmpty { "-" }
             binding.tvDummy.text = "Dummy Current/Total: ${item.noOfCurrentDummyPatients}/${item.noOfDummyPatientsToBeAddedAtSlotCreation}".ifEmpty { "-" }

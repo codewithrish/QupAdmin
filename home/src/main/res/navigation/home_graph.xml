@@ -25,10 +25,14 @@
         <action
             android:id="@+id/action_homeFragment_to_summary_graph"
             app:destination="@id/summary_graph" />
+        <action
+            android:id="@+id/action_homeFragment_to_comm_graph"
+            app:destination="@id/comm_graph" />
     </fragment>
     <include app:graph="@navigation/doctor_graph" />
     <include app:graph="@navigation/reception_graph" />
     <include app:graph="@navigation/srk_graph" />
     <include app:graph="@navigation/entity_graph" />
     <include app:graph="@navigation/summary_graph" />
+    <include app:graph="@navigation/comm_graph" />
 </navigation>

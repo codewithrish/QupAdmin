@@ -17,7 +17,7 @@ import javax.inject.Singleton
 object DoctorModule {
     @Singleton
     @Provides
-    fun provideReceptionApi(
+    fun provideDoctorApi(
         @QupInterceptorOkHttpClient okHttpClient: OkHttpClient,
         retrofit: Retrofit.Builder
     ): DoctorApi = retrofit

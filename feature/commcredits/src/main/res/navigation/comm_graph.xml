@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/comm_graph"
+    app:startDestination="@id/creditRequestsFragment">
+
+    <fragment
+        android:id="@+id/creditRequestsFragment"
+        android:name="app.qup.commcredits.presentation.CreditRequestsFragment"
+        android:label="Credit Requests"
+        tools:layout="@layout/fragment_credit_requests" >
+        <action
+            android:id="@+id/action_creditRequestsFragment_to_approveCreditsFragment"
+            app:destination="@id/approveCreditsFragment" />
+        <action
+            android:id="@+id/action_creditRequestsFragment_to_adminNotesFragment"
+            app:destination="@id/adminNotesFragment" />
+        <action
+            android:id="@+id/action_creditRequestsFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/approveCreditsFragment"
+        android:name="app.qup.commcredits.presentation.approve.ApproveCreditsFragment"
+        android:label="fragment_approve_credits"
+        tools:layout="@layout/fragment_approve_credits" >
+        <argument
+            android:name="notificationRequest"
+            app:argType="app.qup.commcredits.domain.model.NotificationRechargeRequestModel"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="smsRequest"
+            app:argType="app.qup.commcredits.domain.model.SmsRechargeRequestModel"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </dialog>
+    <dialog
+        android:id="@+id/adminNotesFragment"
+        android:name="app.qup.commcredits.presentation.admin_notes.AdminNotesFragment"
+        android:label="fragment_admin_notes"
+        tools:layout="@layout/fragment_admin_notes" >
+        <argument
+            android:name="adminNote"
+            app:argType="app.qup.commcredits.domain.model.AdminNoteModel" />
+    </dialog>
+    <dialog
+        android:id="@+id/paymentFragment"
+        android:name="app.qup.commcredits.presentation.payment.PaymentFragment"
+        android:label="fragment_payment"
+        tools:layout="@layout/fragment_payment" >
+        <argument
+            android:name="notificationRequest"
+            app:argType="app.qup.commcredits.domain.model.NotificationRechargeRequestModel"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="smsRequest"
+            app:argType="app.qup.commcredits.domain.model.SmsRechargeRequestModel"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </dialog>
+</navigation>

@@ -133,4 +133,27 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/layout_comm_credits"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_queue_summary">
+
+        <TextView
+            android:id="@+id/btn_comm_credits"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_rectangle_border"
+            android:padding="16dp"
+            android:text="Communication Credits" />
+
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
