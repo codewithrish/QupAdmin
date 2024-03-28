@@ -11,7 +11,7 @@
         android:id="@+id/lbl_approve_Credit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Approve Credit"
+        android:text="Payment Done"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -81,7 +81,7 @@
         android:layout_marginEnd="8dp"
         android:text="Cancel"
         style="@style/Widget.Material3.Button.OutlinedButton"
-        app:layout_constraintEnd_toStartOf="@+id/btn_approve"
+        app:layout_constraintEnd_toStartOf="@+id/btn_done"
         app:layout_constraintTop_toBottomOf="@+id/et_admin_note" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

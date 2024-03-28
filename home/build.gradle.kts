@@ -18,6 +18,7 @@ dependencies {
     implementation(project(":feature:entity_management"))
     implementation(project(":feature:summary"))
     implementation(project(":feature:commcredits"))
+    implementation(project(":feature:indiapps"))
 
     implementation(libs.core.ktx)
     implementation(libs.appcompat)

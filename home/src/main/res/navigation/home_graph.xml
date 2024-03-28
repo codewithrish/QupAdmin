@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_homeFragment_to_comm_graph"
             app:destination="@id/comm_graph" />
+        <action
+            android:id="@+id/action_homeFragment_to_indi_apps_graph"
+            app:destination="@id/indi_apps_graph" />
     </fragment>
     <include app:graph="@navigation/doctor_graph" />
     <include app:graph="@navigation/reception_graph" />
@@ -35,4 +38,5 @@
     <include app:graph="@navigation/entity_graph" />
     <include app:graph="@navigation/summary_graph" />
     <include app:graph="@navigation/comm_graph" />
+    <include app:graph="@navigation/indi_apps_graph" />
 </navigation>

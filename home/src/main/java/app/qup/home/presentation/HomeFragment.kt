@@ -52,6 +52,10 @@ class HomeFragment : Fragment() {
             val action = HomeFragmentDirections.actionHomeFragmentToEntityGraph()
             navController?.safeNavigate(action)
         }
+        binding.btnIndiApps.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToIndiAppsGraph()
+            navController?.safeNavigate(action)
+        }
         binding.btnQueueSummary.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToSummaryGraph()
             navController?.safeNavigate(action)
