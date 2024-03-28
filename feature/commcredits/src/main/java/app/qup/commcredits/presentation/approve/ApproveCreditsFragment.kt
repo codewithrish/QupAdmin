@@ -17,6 +17,7 @@ import app.qup.commcredits.domain.model.NotificationRechargeRequestModel
 import app.qup.commcredits.domain.model.SmsRechargeRequestModel
 import app.qup.ui.common.setWidthPercent
 import app.qup.ui.common.snack
+import app.qup.util.common.makeToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -104,14 +105,14 @@ class ApproveCreditsFragment : DialogFragment() {
         }
         approveCreditsViewModel.approveSmsCredits.observe(viewLifecycleOwner) {
             it.smsRechargeRequestModel?.let {
-                binding.root.snack("Credits Approved")
+                requireContext().makeToast("Credits Approved")
                 findNavController().previousBackStackEntry?.savedStateHandle?.set(CREDITS_APPROVED, true)
                 findNavController().popBackStack()
             }
         }
         approveCreditsViewModel.approveNotificationCredits.observe(viewLifecycleOwner) {
             it.notificationRechargeRequestModel?.let {
-                binding.root.snack("Credits Approved")
+                requireContext().makeToast("Credits Approved")
                 findNavController().previousBackStackEntry?.savedStateHandle?.set(CREDITS_APPROVED, true)
                 findNavController().popBackStack()
             }

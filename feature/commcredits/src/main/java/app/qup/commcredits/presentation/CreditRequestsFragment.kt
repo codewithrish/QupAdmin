@@ -1,5 +1,6 @@
 package app.qup.commcredits.presentation
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -57,6 +58,7 @@ class CreditRequestsFragment : Fragment(), MenuProvider {
     private fun callFunctions() {
         toggleListener()
         searchListener()
+        addRechargeEntry()
         binding.tgCommType.check(binding.optionSms.id)
         navController?.currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(
             CREDITS_APPROVED
@@ -64,6 +66,13 @@ class CreditRequestsFragment : Fragment(), MenuProvider {
             if (creditsApproved) {
                 loadCreditRequests()
             }
+        }
+    }
+
+    private fun addRechargeEntry() {
+        binding.btnAddRechargeEntry.setOnClickListener {
+            val action = CreditRequestsFragmentDirections.actionCreditRequestsFragmentToAddRechargeFragment()
+            navController?.safeNavigate(action)
         }
     }
 
@@ -91,23 +100,26 @@ class CreditRequestsFragment : Fragment(), MenuProvider {
     private fun toggleListener() {
         binding.tgCommType.addOnButtonCheckedListener { _, _, isChecked ->
             if (isChecked) {
+                binding.grpRechargeBalance.isVisible = binding.tgCommType.checkedButtonId == binding.optionSms.id
                 binding.etDoctorEntity.setText("")
                 loadCreditRequests()
             }
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun loadCreditRequests() {
         when (binding.tgCommType.checkedButtonId) {
             binding.optionSms.id -> creditRequestsViewModel.getSmsCreditRequests()
             binding.optionNotification.id -> creditRequestsViewModel.getNotificationCreditRequests()
         }
         creditRequestsViewModel.smsCreditRequests.observe(viewLifecycleOwner) {
-            it.smsRechargeRequestModels?.let { smsRequests ->
+            it.smsCredits?.let { smsCredits ->
+                binding.tvCreditBalance.text = "Credit Balance: ${smsCredits.currentAvailableCreditBalance}"
                 this.smsRequests.clear()
-                this.smsRequests.addAll(smsRequests)
+                this.smsRequests.addAll(smsCredits.rechargeRequestList)
                 setupSmsAdapter()
-                smsAdapter.submitList(smsRequests)
+                smsAdapter.submitList(this.smsRequests)
             }
             binding.rvCreditRequests.isVisible = !it.isLoading
             binding.progressBar.isVisible = it.isLoading
@@ -117,7 +129,7 @@ class CreditRequestsFragment : Fragment(), MenuProvider {
                 this.notificationRequests.clear()
                 this.notificationRequests.addAll(notificationRequests)
                 setupNotificationAdapter()
-                notificationAdapter.submitList(notificationRequests)
+                notificationAdapter.submitList(this.notificationRequests)
             }
             binding.rvCreditRequests.isVisible = !it.isLoading
             binding.progressBar.isVisible = it.isLoading

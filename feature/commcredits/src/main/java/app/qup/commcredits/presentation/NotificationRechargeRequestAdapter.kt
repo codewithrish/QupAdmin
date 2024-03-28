@@ -48,6 +48,7 @@ class NotificationRechargeRequestAdapter: ListAdapter<NotificationRechargeReques
             }
 
             binding.btnAdminNotes.isVisible = item.adminNotes.isNotEmpty()
+            binding.btnPayment.isEnabled = item.rechargeStatus == "APPROVED"
             binding.btnApproveCredits.isEnabled = item.rechargeStatus != "APPROVED"
             binding.btnApproveCredits.text =  if (item.rechargeStatus == "APPROVED") "Approved" else "Approve Credits"
         }

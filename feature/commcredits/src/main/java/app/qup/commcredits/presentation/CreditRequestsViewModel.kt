@@ -20,7 +20,6 @@ import javax.inject.Inject
 class CreditRequestsViewModel @Inject constructor(
     private val getSmsCreditsUseCase: GetSmsCreditsUseCase,
     private val getNotificationCreditsUseCase: GetNotificationCreditsUseCase,
-    private val topUpSmsUseCase: TopUpSmsUseCase,
 ) : ViewModel() {
 
     private val _smsCreditRequests: MutableLiveData<GetSmsCreditsState> = MutableLiveData()
@@ -31,13 +30,6 @@ class CreditRequestsViewModel @Inject constructor(
     val notificationCreditRequests: LiveData<GetNotificationCreditsState>
         get() = _notificationCreditRequests
 
-    private val _topPupSmsCredits: MutableLiveData<TopUpSmsState> = MutableLiveData()
-    val topPupSmsCredits: LiveData<TopUpSmsState>
-        get() = _topPupSmsCredits
-
-
-
-
     fun getSmsCreditRequests() {
         getSmsCreditsUseCase().onEach {
             _smsCreditRequests.postValue(it)
@@ -47,14 +39,6 @@ class CreditRequestsViewModel @Inject constructor(
     fun getNotificationCreditRequests() {
         getNotificationCreditsUseCase().onEach {
             _notificationCreditRequests.postValue(it)
-        }.launchIn(viewModelScope)
-    }
-
-    fun topPupSmsCredits(
-        topUpSmsRequestDto: TopUpSmsRequestDto
-    ) {
-        topUpSmsUseCase(topUpSmsRequestDto).onEach {
-            _topPupSmsCredits.postValue(it)
         }.launchIn(viewModelScope)
     }
 }
